@@ -13,7 +13,7 @@ You'll want to reference spinBox.css then:
 // import
 import {SpinBox} from "./SpinBox.js";
 
-// create instance
+// create instance with suitable options:
 var spinBox = new SpinBox({label: "spin box", min: 0});
 
 // append to your page
