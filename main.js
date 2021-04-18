@@ -6,9 +6,8 @@ document.body.appendChild(spinBox);
 
 spinBox.setValue(0);
 
-spinBox.addEventListener("spinBoxChange", function(evt) {
-    console.log("spinBox changed by", evt.detail.delta);
-    console.log("spinBox value now", evt.detail.value);
+spinBox.addEventListener("change", function(evt) {
+    console.log("spinBox value now", evt.target.value);
     console.log("make sure", spinBox.getValue());
 }, false);
 

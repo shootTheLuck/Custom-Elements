@@ -55,12 +55,11 @@ QUnit.module("SpinBox", function(hooks) {
         assert.equal(this.spinBox.getValue(), 1, "expect value to be 1");
     });
 
-    QUnit.test("dispatches custom event on changeValue()", function(assert) {
+    QUnit.test("dispatches change event on changeValue()", function(assert) {
         let valueReceived = null;
         let deltaReceived = null;
-        this.spinBox.addEventListener("spinBoxChange", function(evt) {
-            valueReceived = evt.detail.value;
-            deltaReceived = evt.detail.delta;
+        this.spinBox.addEventListener("change", function(evt) {
+            valueReceived = evt.target.value;
         });
 
         this.spinBox.setValue(10);
@@ -69,7 +68,6 @@ QUnit.module("SpinBox", function(hooks) {
         this.spinBox.changeValue(newValue);
 
         assert.equal(valueReceived, 10 + 100000, "expect set and get -1");
-        assert.equal(deltaReceived, 100000, "expect set and get -1");
     });
 
 });

@@ -7,9 +7,8 @@
  * Get value with .getValue method
  * Listen for changes by adding event listener:
  *
- *  spinBox.addEventListener("spinboxChange", function(evt) {
- *      console.log("spinBox changed by", evt.detail.delta);
- *      console.log("spinBox value now", evt.detail.value);
+ *  spinBox.addEventListener("change", function(evt) {
+ *      console.log("spinBox value now", evt.target.value);
         console.log("make sure", spinBox.getValue());
  *  }, false);
  *
@@ -119,18 +118,16 @@ class SpinBox extends HTMLElement {
         downButton.className = this.className + "-down-button";
         downArrow.className = this.className + "-down-arrow";
 
-        this.changeEvent = new CustomEvent("spinBoxChange", {
-            detail: {
-                delta: 0,
-                value: 0
-            }
-        });
-
-        this.setValue(this.initialValue);
         this.style.setProperty("--label-width", this._labelWidth + "px");
         this.style.setProperty("--input-width", this._inputWidth + "px");
         document.addEventListener("wheel", this.handleMouseWheel.bind(this));
 
+        this.setValue(this.initialValue);
+        this.changeEvent = new Event("change");
+        /* don't let input element send its own event */
+        this.input.addEventListener("change", function(evt) {
+            evt.stopImmediatePropagation();
+        });
     }
 
     get labelWidth() {
@@ -155,9 +152,11 @@ class SpinBox extends HTMLElement {
         this.input.disabled = !bool;
     }
 
-    handleFocusOut() {
-        let value = this.getValue();
-        this.changeValue(value);
+    handleFocusOut(evt) {
+        if (!this.contains(evt.relatedTarget)) {
+            let value = this.getValue();
+            this.changeValue(value);
+        }
     }
 
     handleMouseWheel(evt) {
@@ -229,8 +228,6 @@ class SpinBox extends HTMLElement {
         this.setValue(value);
         this.input.select();
 
-        this.changeEvent.detail.delta = this.value - oldValue;
-        this.changeEvent.detail.value = this.value;
         this.dispatchEvent(this.changeEvent);
     }
 }
