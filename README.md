@@ -23,8 +23,8 @@ document.body.appendChild(spinBox);
 // Get value with .getValue method
 // Listen for changes by adding event listener:
 
-spinBox.addEventListener("spinBoxChange", function(evt) {
-  console.log("spinBox changed by", evt.detail.delta);
-  console.log("spinBox value now", evt.detail.value);
+spinBox.addEventListener("change", function(evt) {
+    console.log("spinBox value now", evt.target.value);
+    console.log("make sure", spinBox.getValue());
 }, false);
 ```
