@@ -2,18 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Spin Box</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Spin Box Custom Element</title>
     <link rel="stylesheet" href="spinBox.css">
     <script src="main.js" type="module"></script>
 </head>
 <body>
 
-    <div id="heading">Spin Box Custom Element.</div>
-    <div id="info">
-        <a href="https://github.com/shootTheLuck/Spin-Box">Repo on github</a>
-    </div>
+    <div id="heading">Spin Box Custom Element. <a href="https://github.com/shootTheLuck/Spin-Box">Repo on github</a></div>
+    <br>
+    <p id="spinBox-info">Spin Box inserted dynamically:</p>
 
+    <template id="template">
+        <style>
+        </style>
+        <p>Spin Box from templated HTML:</p>
+        <spin-box id="spinBox-from-template" label="anotherSpinner"></spin-box>
+    </template>
 
 </body>
 </html>
+
