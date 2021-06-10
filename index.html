@@ -5,18 +5,32 @@
     <title>Spin Box Custom Element</title>
     <link rel="stylesheet" href="spinBox.css">
     <script src="main.js" type="module"></script>
+    <style>
+
+    </style>
 </head>
 <body>
 
     <div id="heading">Spin Box Custom Element. <a href="https://github.com/shootTheLuck/Spin-Box">Repo on github</a></div>
     <br>
-    <p id="spinBox-info">Spin Box inserted dynamically:</p>
+    <p>Standard input type=number</p>
+    <input type="number" value="20">
+    <p id="spinBox-info">Spin Box inserted dynamically. Minimum set to 0.</p>
 
     <template id="template">
+
         <style>
+
         </style>
-        <p>Spin Box from templated HTML:</p>
-        <spin-box id="spinBox-from-template" label="anotherSpinner"></spin-box>
+
+        <p>Spin Box from templated HTML. Maximum set to 25:</p>
+        <label for="spinBox-from-template">Label:</label>
+        <spin-box id="spinBox-from-template" max="25" value="8"></spin-box>
+
+        <p>Spin Box from templated HTML. Disabled:</p>
+        <label for="spinBox-from-template">Label:</label>
+        <spin-box id="another-spinBox" max="22" value="8" disabled></spin-box>
+
     </template>
 
 </body>
