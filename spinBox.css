@@ -5,31 +5,22 @@
 */
 
 .spinBox {
-    display: block;
-    font-size: 1em;
-    height: 1.6em;
-    margin: 0.3em;
-    padding: 0;
-    position: relative;
 
     /* theme overridable variables */
     --input-background-color: white;
-    --input-border-color: rgb(64, 64, 64);
+    --input-border-color: rgb(32, 32, 32);
     --input-border-radius: 0.2em;
-    --input-color: rgb(30, 30, 30);
-    --input-font-family: inherit;
-    --label-color: inherit;
+    --input-color: rgb(32, 32, 32);
+    --input-font-family: sans-serif;
 
-    /* likely javascript variables */
-    --label-width: 150px;
-    --input-width: 75px;
-}
-
-.spinBox label {
-    color: var(--theme-label-color, var(--label-color));
-    padding: 0.5em;
-    user-select: none;
-    vertical-align: middle;
+    padding: 0;
+    margin: 3px;
+    position: relative;
+    display: inline-block;
+    height: auto;
+    overflow: visible;
+    width: 10em;
+    height: 1.5em;
 }
 
 .spinBox input {
@@ -41,17 +32,17 @@
     border-top-left-radius: var(--theme-input-border-radius, var(--input-border-radius));
     border-bottom-left-radius: var(--theme-input-border-radius, var(--input-border-radius));
     box-sizing: border-box;
-    box-shadow: 0 0.525em 0.125em rgba(0, 0, 0, 0.03125) inset;
     color: var(--theme-input-color, var(--input-color));
-    display: inline-block;
-    font-family: var(--input-font-family, var --input-font-family));
-    font-size: 1em;
-    height: 1.6em;
-    left: var(--label-width);
-    padding: 0.2em;
-    position: absolute;
+    font-family: var(--theme-input-font-family, var(--input-font-family));
+    font-size: 0.9em;
+    height: 100%;
+    margin: 0;
+    padding: 0.1em 0.5em 0.1em 0;
     text-align: right;
-    width: var(--input-width);
+
+    /* width of whole - button width + border width?? */
+    width: calc(100% - 1.1em);
+
 }
 
 .spinBox input:focus {
@@ -60,6 +51,11 @@
 
 .spinBox input[disabled] {
     background: rgb(240, 240, 240);
+    color: rgb(100, 100, 100);
+}
+
+.spinBox-buttons {
+    display: inline-block;
 }
 
 .spinBox button {
@@ -70,12 +66,17 @@
     box-sizing: border-box;
     cursor: pointer;
     display: block;
-    height: 1em;
-    left: calc(var(--label-width) + var(--input-width));
+
+    /* half of border + half of height */
+    height: calc(0.05em + 100% / 2);
+
+    /* width of whole - button width */
+    left: calc(100% - 1.32em);
+
     margin: 0;
     padding: 0;
     position: absolute;
-    width: 1.1em;
+    width: 1.32em;
 }
 
 .spinBox button:hover {
@@ -97,13 +98,16 @@
 }
 
 .spinBox-up-arrow, .spinBox-down-arrow {
-    /* "border" makes the arrow.  using same color as input color */
-    border-color: var(--theme-input-color, var(--input-color));
+
+    /* "border" makes the arrow using same color as border color */
+    border-color: var(--theme-border-color, var(--input-border-color));
     border-style: solid;
-    border-width: 0 0.12em 0.12em 0;
+    border-width: 0 0.125em 0.125em 0;
     box-sizing: border-box;
     display: inline-block;
     left: 50%;
+
+    /* padding sets size of arrow */
     padding: 2px;
     position: absolute;
 }
