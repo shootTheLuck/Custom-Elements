@@ -9,7 +9,7 @@
  *
  *  spinBox.addEventListener("change", function(evt) {
  *      console.log("spinBox value now", evt.target.value);
-        console.log("make sure", spinBox.getValue());
+ *      //console.log("make sure", spinBox.getValue());
  *  }, false);
  *
  * Depends spinbox.css
@@ -22,7 +22,6 @@ class SpinBox extends HTMLElement {
 
         const defaults = {
             className: "spinBox",
-            labelText: "Spin Box",
             step: 1,
             decimals: 0,
             max: Infinity,
@@ -30,24 +29,22 @@ class SpinBox extends HTMLElement {
             initialSpeed: 10,
             highSpeed: 2,
             increaseSpeedAfter: 4, //steps
-            labelWidth: 150, //px
-            inputWidth: 75, //px
             value: 0,
         };
 
-        this.className = opts.className || this.getAttribute("class") || defaults.className;
-        this.labelText = opts.label || this.getAttribute("label") || defaults.labelText;
-
+        this.className =
+                opts.className || this.getAttribute("class") || defaults.className;
         this.step = opts.step ||
                 parseFloat(this.getAttribute("step")) || defaults.step;
         this.decimals = opts.decimals ||
                 parseFloat(this.getAttribute("decimals")) || defaults.decimals;
-        this.width = opts.width ||
-                parseFloat(this.getAttribute("width")) || defaults.width;
-        this.min = opts.min ||
+
+        this.min = (!isNaN(opts.min))? opts.min :
                 parseFloat(this.getAttribute("min")) || defaults.min;
-        this.max = opts.max ||
+
+        this.max = (!isNaN(opts.max))? opts.max :
                 parseFloat(this.getAttribute("max")) || defaults.max;
+
         this.initialSpeed = opts.initialSpeed ||
                 parseFloat(this.getAttribute("initialSpeed")) || defaults.initialSpeed;
         this.highSpeed = opts.highSpeed ||
@@ -55,11 +52,7 @@ class SpinBox extends HTMLElement {
         this.increaseSpeedAfter = opts.increaseSpeedAfter ||
                 parseFloat(this.getAttribute("increaseSpeedAfter")) || defaults.increaseSpeedAfter;
 
-        this._labelWidth = opts.labelWidth ||
-                parseFloat(this.getAttribute("labelWidth")) || defaults.labelWidth;
-        this._inputWidth = opts.inputWidth ||
-                parseFloat(this.getAttribute("inputWidth")) || defaults.inputWidth;
-        this.initialValue = opts.value ||
+        const initialValue = opts.value ||
                 parseFloat(this.getAttribute("value")) || defaults.value;
 
         this.currentSpeed = 0;
@@ -67,24 +60,23 @@ class SpinBox extends HTMLElement {
         this.timer = 0;
         this.animation = null;
 
-        this.label = document.createElement("label");
-        this.label.textContent = this.labelText;
-        this.appendChild(this.label);
-
         this.input = document.createElement("input");
         this.input.addEventListener("focus", this.input.select);
         this.input.addEventListener("keydown", this.handleKeyDown.bind(this));
-        this.input.addEventListener("focusout", this.handleFocusOut.bind(this));
+        this.input.addEventListener("blur", this.handleFocusOut.bind(this));
         this.appendChild(this.input);
 
-        const resetDynamics = function() {
-            this.timer = 0;
-            this.numOfTimes = 0;
-            this.currentSpeed = this.initialSpeed;
-        }.bind(this);
+        const buttons = document.createElement("div");
+        this.appendChild(buttons);
 
         const upButton = document.createElement("button");
         const downButton = document.createElement("button");
+
+        const resetDynamics = () => {
+            this.timer = 0;
+            this.numOfTimes = 0;
+            this.currentSpeed = this.initialSpeed;
+        };
 
         upButton.addEventListener("mousedown", (evt) => {
             resetDynamics();
@@ -96,66 +88,58 @@ class SpinBox extends HTMLElement {
             this.animation = requestAnimationFrame(this.stepValue.bind(this, -this.step));
         });
 
-        [upButton, downButton].forEach((item) => {
-            item.addEventListener("mouseup", (evt) => {
+        [upButton, downButton].forEach((button) => {
+            button.addEventListener("mouseup", (evt) => {
                 cancelAnimationFrame(this.animation);
             });
-            item.addEventListener("mouseleave", (evt) => {
+            button.addEventListener("mouseleave", (evt) => {
                 cancelAnimationFrame(this.animation);
             });
+            button.tabIndex = -1;
+            buttons.appendChild(button);
         });
 
-        this.appendChild(upButton);
         const upArrow = document.createElement("i");
         upButton.appendChild(upArrow);
 
-        this.appendChild(downButton);
         const downArrow = document.createElement("i");
         downButton.appendChild(downArrow);
 
+        buttons.className = this.className + "-buttons";
         upButton.className = this.className + "-up-button";
         upArrow.className = this.className + "-up-arrow";
         downButton.className = this.className + "-down-button";
         downArrow.className = this.className + "-down-arrow";
 
-        this.style.setProperty("--label-width", this._labelWidth + "px");
-        this.style.setProperty("--input-width", this._inputWidth + "px");
         document.addEventListener("wheel", this.handleMouseWheel.bind(this));
 
-        this.setValue(this.initialValue);
         this.changeEvent = new Event("change");
+
         /* don't let input element send its own event */
-        this.input.addEventListener("change", function(evt) {
-            evt.stopImmediatePropagation();
-        });
+        // this.input.addEventListener("change", (evt) => {
+            // evt.stopImmediatePropagation();
+        // });
+
+        if (opts.disabled ||
+            this.getAttribute("disabled") === "" ||
+            this.getAttribute("disabled") === true) {
+            this.disabled = true;
+        }
+        this.setValue(initialValue);
     }
 
-    get labelWidth() {
-        return this._labelWidth;
+    set disabled(bool) {
+        this.input.disabled = bool;
     }
 
-    set labelWidth(num) {
-        this._labelWidth = num;
-        this.style.setProperty("--label-width", this._labelWidth + "px");
-    }
-
-    get inputWidth() {
-        return this._inputWidth;
-    }
-
-    set inputWidth(num) {
-        this._inputWidth = num;
-        this.style.setProperty("--input-width", this._inputWidth + "px");
-    }
-
-    setEnabled(bool) {
-        this.input.disabled = !bool;
+    get disabled() {
+        return this.input.disabled;
     }
 
     handleFocusOut(evt) {
         if (!this.contains(evt.relatedTarget)) {
             let value = this.getValue();
-            this.changeValue(value);
+            this.changeValue(value, false);
         }
     }
 
@@ -168,22 +152,20 @@ class SpinBox extends HTMLElement {
     }
 
     handleKeyDown(evt) {
-        if (document.activeElement === this.input) {
-            if (evt.key === "Enter") {
-                evt.preventDefault();
-                let value = this.getValue();
-                this.changeValue(value);
-            }
-            if (evt.key === "ArrowUp") {
-                evt.preventDefault();
-                let value = this.getValue();
-                this.changeValue(value + this.step);
-            }
-            if (evt.key === "ArrowDown") {
-                evt.preventDefault();
-                let value = this.getValue();
-                this.changeValue(value - this.step);
-            }
+        if (evt.key === "Enter") {
+            evt.preventDefault();
+            let value = this.getValue();
+            this.changeValue(value);
+        }
+        if (evt.key === "ArrowUp") {
+            evt.preventDefault();
+            let value = this.getValue();
+            this.changeValue(value + this.step);
+        }
+        if (evt.key === "ArrowDown") {
+            evt.preventDefault();
+            let value = this.getValue();
+            this.changeValue(value - this.step);
         }
     }
 
@@ -222,13 +204,13 @@ class SpinBox extends HTMLElement {
         this.input.value = value.toFixed(this.decimals);
     }
 
-    changeValue(value) {
+    changeValue(value, isFocused = true) {
         if (isNaN(value)) value = this.value;
-        let oldValue = this.value;
         this.setValue(value);
-        this.input.select();
-
-        this.dispatchEvent(this.changeEvent);
+        if (isFocused) {
+            this.input.select();
+            this.dispatchEvent(this.changeEvent);
+        }
     }
 }
 
