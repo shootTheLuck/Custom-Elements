@@ -6,18 +6,11 @@
 
 .spinBox {
 
-    /* theme overridable variables */
-    /* theme overridable variables
-     * replace "--" with "--input-"
-     */
+    /* theme overridable variables preceeded by ("--input-"); */
 
-    --arrow-color: rgb(10, 10, 10);
-    --background-color: white;
-    --border-color: rgb(132, 132, 132);
-    --border-radius: 0.2em;
-    --color: rgb(32, 32, 32);
-    --font-family: sans-serif;
-
+    border-color: rgb(132, 132, 132);
+    border-radius: 0.2em;
+    font-family: sans-serif;
     padding: 0;
     margin: 3px;
     position: relative;
@@ -29,25 +22,24 @@
 }
 
 .spinBox input {
-    background-color: var(--input-background-color, var(--background-color));
+    background-color: var(--input-background-color, inherit);
     border-style: solid;
-    border-width: 0.075em;
-    border-color: var(--input-border-color, var(--border-color));
+    border-width: 0.1em;
+    border-color: var(--input-border-color, inherit);
     border-right: none;
-    border-top-left-radius: var(--input-border-radius, var(--border-radius));
-    border-bottom-left-radius: var(--input-border-radius, var(--border-radius));
+    border-top-left-radius: var(--input-border-radius, inherit);
+    border-bottom-left-radius: var(--input-border-radius, inherit);
     box-sizing: border-box;
-    color: var(--input-color, var(--color));
-    font-family: var(--input-font-family, var(--font-family));
+    color: var(--input-color, inherit);
+    font-family: var(--input-font-family, inherit);
     font-size: 0.9em;
     height: 100%;
     margin: 0;
     padding: 0.1em 0.5em 0.1em 0;
     text-align: right;
 
-    /* width of whole - button width + border width?? */
-    width: calc(100% - 1.1em);
-
+    /* width of whole - button width */
+    width: calc(100% - 1.32em);
 }
 
 .spinBox input:focus {
@@ -70,23 +62,20 @@
 
 .spinBox-buttons {
     display: inline-block;
+    border-color: var(--input-border-color, inherit);
+    border-radius: var(--input-border-radius, inherit);
 }
 
 .spinBox button {
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(235, 235, 235);
     border-style: solid;
     border-width: 0.1em;
-    border-color: var(--input-border-color, var(--border-color));
+    border-color: var(--input-border-color, inherit);
     box-sizing: border-box;
-    cursor: pointer;
     display: block;
 
     /* half of border + half of height */
     height: calc(0.05em + 100% / 2);
-
-    /* width of whole - button width */
-    left: calc(100% - 1.32em);
-
     margin: 0;
     padding: 0;
     position: absolute;
@@ -94,27 +83,27 @@
 }
 
 .spinBox button:hover {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(220, 220, 220);
 }
 
 .spinBox button:active {
-    background-color: rgb(200, 200, 200);
+    background-color: rgb(190, 190, 190);
 }
 
 .spinBox-up-button {
     top: 0;
-    border-top-right-radius: var(--input-border-radius, var(--border-radius));
+    border-top-right-radius: var(--input-border-radius, inherit);
 }
 
 .spinBox-down-button {
     bottom: 0;
-    border-bottom-right-radius: var(--input-border-radius, var(--border-radius));
+    border-bottom-right-radius: var(--input-border-radius, inherit);
 }
 
 .spinBox-up-arrow, .spinBox-down-arrow {
 
     /* "border" makes the arrow using same color as border color */
-    border-color: var(--input-arrow-color, var(--arrow-color));
+    border-color: var(--input-arrow-color, inherit);
     border-style: solid;
     border-width: 0 0.125em 0.125em 0;
     box-sizing: border-box;
