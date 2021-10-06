@@ -116,9 +116,9 @@ class SpinBox extends HTMLElement {
         this.changeEvent = new Event("change");
 
         /* don't let input element send its own event */
-        // this.input.addEventListener("change", (evt) => {
-            // evt.stopImmediatePropagation();
-        // });
+        this.input.addEventListener("change", (evt) => {
+            evt.stopImmediatePropagation();
+        });
 
         if (opts.disabled ||
             this.getAttribute("disabled") === "" ||
