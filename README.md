@@ -1,10 +1,6 @@
-## shootTheLuck.github.io
-here we are!
+## A Collection of Custom UI Elements in Vanilla Javascript
 
 #### Custom HTML Elements:
-ContextMenu [repo](https://github.com/shootTheLuck/Context-Menu) / [demo](https://shoottheluck.github.io/Context-Menu)<br>
-ModalWindow [repo](https://github.com/shootTheLuck/Modal-Window) / [demo](https://shoottheluck.github.io/Modal-Window)<br>
-SpinBox [repo](https://github.com/shootTheLuck/CustomElements/SpinBox) / [demo](https://shoottheluck.github.io/Spin-Box)<br>
-
-#### THREE.js:
-ViewControls [repo](https://github.com/shootTheLuck/ViewControls) / [demo](https://shoottheluck.github.io/ViewControls)<br>
+ContextMenu [demo](https://shoottheluck.github.io/CustomElements/ContextMenu)<br>
+ModalWindow [demo](https://shoottheluck.github.io/CustomElements/ModalWindow)<br>
+SpinBox [demo](https://shoottheluck.github.io/CustomElements/SpinBox)<br>
