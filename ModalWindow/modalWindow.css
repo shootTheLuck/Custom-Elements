@@ -1,0 +1,112 @@
+
+.modalWindow {
+
+    /*  theme overridable variables
+     * replace "--" with "--window-"
+     */
+
+    --border-width: 3px;
+    --border-color: grey;
+    --border-radius: 6px;
+    --title-color: white;
+    --title-bar-background-color: rgba(50, 50, 50, 1.0);
+    --client-area-background-color: rgba(10, 10, 10, 1.0);
+    --client-area-color: white;
+
+    border-style: solid;
+    border-width: var(--window-border-width, var(--border-width));
+    border-color: var(--window-border-color, var(--border-color));
+    border-radius: var(--window-border-radius, var(--border-radius));
+    opacity: 1;
+    position: fixed;
+    top: 30%;
+    left: 35%;
+    width: 400px;
+    transition: opacity 80ms linear;
+    overflow: hidden;
+    resize: both;
+    white-space: nowrap;
+    user-select: none;
+/*
+    visibility: hidden;
+*/
+    display: none;
+    flex-direction: column;
+}
+
+.modalWindow-title-bar {
+    border-bottom: solid 3px;
+    border-color: var(--window-border-color, var(--border-color));
+    background-color: var(--window-title-bar-background-color, var(--title-bar-background-color));
+    flex-shrink: 0;
+    height: 32px;
+    line-height: 32px;
+    width: 100%;
+}
+
+.modalWindow-title {
+    color: var(--window-title-color, var(--title-color));
+    user-select: none;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    vertical-align: middle;
+}
+
+.modalWindow-client-area {
+    color: var(--window-client-area-color, var(--client-area-color));
+    background-color: var(--window-client-area-background-color, var(--client-area-background-color));
+    overflow: auto;
+    padding: 5px;
+    height: 100%;
+}
+
+.modalWindow-closeButton {
+    background-color: rgba(180, 180, 180, 0);
+    border: 2px solid rgba(180, 180, 180, 0);
+    margin: 3px;
+    height: 22px;
+    width: 22px;
+    padding: 0;
+    position: absolute;
+    left : 100%;
+    transform: translate(-30px,0);
+}
+
+.modalWindow-closeButton:hover,
+.modalWindow-closeButton:focus {
+    border: 2px solid grey;
+    background-color: rgb(180, 180, 180);
+    /*
+    cursor: pointer;
+    */
+}
+
+.modalWindow-closeButton:active {
+    background-color: rgb(120,120,120);
+}
+
+/* https://stackoverflow.com/questions/18920542/draw-an-x-in-css*/
+
+.modalWindow-closeButton:before,
+.modalWindow-closeButton:after{
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 2px;
+    /* background-color will be color of the x*/
+    background-color: black;
+}
+
+.modalWindow-closeButton:before{
+    transform: translate(1px, -1px) rotate(45deg) ;
+    left: 2px;
+}
+.modalWindow-closeButton:after{
+    transform: translate(-1px, -1px) rotate(-45deg) ;
+    right: 2px;
+}
+
+
+
+

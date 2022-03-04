@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Modal Window Element</title>
+    <style>
+
+        [window-theme=plain] {
+            --window-title-bar-background-color: DimGrey;
+            --window-title-color: white;
+            --window-title-font-family: Arial;
+            --window-client-area-background-color: #fafafa;
+            --window-client-area-color: #151515;
+            --window-border-width: 2px;
+            --window-border-color: #151515;
+            --window-border-radius: 0;
+        }
+
+    </style>
+    <link rel="stylesheet" href="modalWindow.css">
+</head>
+<body>
+    <div id="info">
+        <a href="https://github.com/shootTheLuck/Modal-Window">Repo on github</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <br>
+    <br>
+    <br>
+    <div id="heading">Custom Modal Window Element.</div>
+    <button id="showHideModalBtn">Show/Hide Modal Window</button>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div>Modal Window from templated HTML:</div>
+    <template id="template">
+        <modal-window id="modalWindow-from-template" label="anotherSpinner"></modal-window>
+    </template>
+        <button id="showHideTemplateModalBtn">Show/Hide Template Modal Window</button>
+
+    <script src="main.js" type="module"></script>
+
+</body>
+</html>
