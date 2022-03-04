@@ -12,8 +12,146 @@
  *      //console.log("make sure", spinBox.getValue());
  *  }, false);
  *
- * Depends spinbox.css
  */
+
+
+const template = document.createElement('template');
+
+template.innerHTML =
+`<style>
+/*
+    Adapted from Kate Morley
+    http://code.iamkate.com/javascript/spin-box-widget/ CC0 1.0
+*/
+
+:host {
+    border-color: rgb(132, 132, 132);
+    border-radius: 0.2em;
+
+    font-family: sans-serif;
+    font-size: 0.9em;
+    padding: 0;
+    margin: inherit;
+    position: relative;
+    display: inline-block;
+    width: 10em;
+}
+
+input {
+
+    background-color: inherit;
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0.1em;
+    border-right: none;
+    border-top-left-radius: inherit;
+    border-bottom-left-radius: inherit;
+    color: inherit;
+
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0.1em 0.2em 0.1em 0;
+    text-align: right;
+
+    box-sizing: border-box;
+    /* width of whole - button width + border width */
+    width: calc(100% - 1.32em + 0.1em);
+}
+
+input:focus {
+    outline: none;
+}
+
+input::selection {
+/*
+    background: #1A7FEB;
+    background: #0074E8;
+*/
+    background: #2084E8;
+    color: white;
+}
+
+input[disabled] {
+    background: rgb(240, 240, 240);
+    color: rgb(100, 100, 100);
+}
+
+.buttons {
+    display: inline-block;
+    border-color: inherit;
+    border-radius: inherit;
+}
+
+button {
+    background-color: inherit;
+    border-style: solid;
+    border-color: inherit;
+    border-width: 0.11em;
+    display: block;
+
+    /* half of border + half of height */
+    height: calc(0.05em + 100% / 2);
+    width: 1.32em;
+    position: absolute;
+    box-sizing: border-box;
+    left: calc(100% - 1.32em);
+}
+
+button:hover {
+    background-color: rgb(220, 220, 220);
+}
+
+button:active {
+    background-color: rgb(190, 190, 190);
+}
+
+.up-button {
+    top: 0;
+    border-top-right-radius: inherit;
+}
+
+.down-button {
+    bottom: 0;
+    border-bottom-right-radius: inherit;
+}
+
+.up-arrow, .down-arrow {
+
+    /* "border" makes the arrow using same color as border color */
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0 0.125em 0.125em 0;
+    display: inline-block;
+    left: 50%;
+
+    /* padding sets size of arrow */
+    padding: 2px;
+    position: absolute;
+}
+
+.up-arrow {
+    top: 64%;
+    transform: translate(-50%, -50%) rotate(-135deg);
+}
+
+.down-arrow {
+    top: 40%;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+</style>
+
+<input>
+<div class="buttons">
+    <button tabindex="-1" class="up-button">
+        <i class="up-arrow"></i>
+    </button>
+    <button tabindex="-1" class="down-button">
+        <i class="down-arrow"></i>
+    </button>
+</div>
+`
+
 
 class SpinBox extends HTMLElement {
 
@@ -21,7 +159,6 @@ class SpinBox extends HTMLElement {
         super();
 
         const defaults = {
-            className: "spinBox",
             step: 1,
             decimals: 0,
             max: Infinity,
@@ -32,27 +169,21 @@ class SpinBox extends HTMLElement {
             value: 0,
         };
 
-        this.className =
-                opts.className || this.getAttribute("class") || defaults.className;
         this.step = opts.step ||
                 parseFloat(this.getAttribute("step")) || defaults.step;
         this.decimals = opts.decimals ||
                 parseFloat(this.getAttribute("decimals")) || defaults.decimals;
-
         this.min = (!isNaN(opts.min))? opts.min :
                 parseFloat(this.getAttribute("min")) || defaults.min;
-
         this.max = (!isNaN(opts.max))? opts.max :
                 parseFloat(this.getAttribute("max")) || defaults.max;
-
         this.initialSpeed = opts.initialSpeed ||
                 parseFloat(this.getAttribute("initialSpeed")) || defaults.initialSpeed;
         this.highSpeed = opts.highSpeed ||
                 parseFloat(this.getAttribute("highSpeed")) || defaults.highSpeed;
         this.increaseSpeedAfter = opts.increaseSpeedAfter ||
                 parseFloat(this.getAttribute("increaseSpeedAfter")) || defaults.increaseSpeedAfter;
-
-        const initialValue = opts.value ||
+        this.value = opts.value ||
                 parseFloat(this.getAttribute("value")) || defaults.value;
 
         this.currentSpeed = 0;
@@ -60,17 +191,20 @@ class SpinBox extends HTMLElement {
         this.timer = 0;
         this.animation = null;
 
-        this.input = document.createElement("input");
+        this.attachShadow({mode: "open"});
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+        this.input = this.shadowRoot.querySelector("input");
+        this.input.value = this.value.toFixed(this.decimals);
+
         this.input.addEventListener("focus", this.input.select);
         this.input.addEventListener("keydown", this.handleKeyDown.bind(this));
         this.input.addEventListener("blur", this.handleFocusOut.bind(this));
-        this.appendChild(this.input);
 
-        const buttons = document.createElement("div");
-        this.appendChild(buttons);
-
-        const upButton = document.createElement("button");
-        const downButton = document.createElement("button");
+        // /* don't let input element send its own event */
+        this.input.addEventListener("change", (evt) => {
+            evt.stopImmediatePropagation();
+        });
 
         const resetDynamics = () => {
             this.timer = 0;
@@ -78,11 +212,13 @@ class SpinBox extends HTMLElement {
             this.currentSpeed = this.initialSpeed;
         };
 
+        const upButton = this.shadowRoot.querySelector(".up-button");
         upButton.addEventListener("mousedown", (evt) => {
             resetDynamics();
             this.animation = requestAnimationFrame(this.stepValue.bind(this, this.step));
         });
 
+        const downButton = this.shadowRoot.querySelector(".down-button");
         downButton.addEventListener("mousedown", (evt) => {
             resetDynamics();
             this.animation = requestAnimationFrame(this.stepValue.bind(this, -this.step));
@@ -95,37 +231,18 @@ class SpinBox extends HTMLElement {
             button.addEventListener("mouseleave", (evt) => {
                 cancelAnimationFrame(this.animation);
             });
-            button.tabIndex = -1;
-            buttons.appendChild(button);
         });
-
-        const upArrow = document.createElement("i");
-        upButton.appendChild(upArrow);
-
-        const downArrow = document.createElement("i");
-        downButton.appendChild(downArrow);
-
-        buttons.className = this.className + "-buttons";
-        upButton.className = this.className + "-up-button";
-        upArrow.className = this.className + "-up-arrow";
-        downButton.className = this.className + "-down-button";
-        downArrow.className = this.className + "-down-arrow";
 
         document.addEventListener("wheel", this.handleMouseWheel.bind(this));
 
         this.changeEvent = new Event("change");
-
-        /* don't let input element send its own event */
-        this.input.addEventListener("change", (evt) => {
-            evt.stopImmediatePropagation();
-        });
 
         if (opts.disabled ||
             this.getAttribute("disabled") === "" ||
             this.getAttribute("disabled") === true) {
             this.disabled = true;
         }
-        this.setValue(initialValue);
+
     }
 
     set disabled(bool) {
@@ -192,6 +309,7 @@ class SpinBox extends HTMLElement {
     }
 
     getValue() {
+        console.log(typeof this.input.value);
         let value = parseFloat(this.input.value);
         return value;
     }

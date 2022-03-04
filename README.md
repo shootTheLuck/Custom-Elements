@@ -8,13 +8,12 @@ It's adapted from Kate Morley's Spin Box Widget http://code.iamkate.com/javascri
 I didn't like the look of the stock html input element type=number and found it to be un-stylable. I also wanted a different dynamic for the button behavior.
 
 ## How do I use it?
-You'll want to reference spinBox.css then:
 ```javascript
 // import
 import {SpinBox} from "./SpinBox.js";
 
 // create instance with suitable options:
-var spinBox = new SpinBox({label: "spin box", min: 0});
+var spinBox = new SpinBox({min: 0});
 
 // append to your page
 document.body.appendChild(spinBox);

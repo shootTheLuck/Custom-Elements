@@ -7,17 +7,19 @@ label.innerText = "Label:";
 document.body.appendChild(label);
 
 // create a spinBox and append programatically
-var spinBox = new SpinBox({decimals: 2, min: 0, value: 0});
+var spinBox = new SpinBox({decimals: 2, min: 0});
 document.body.appendChild(spinBox);
 
-spinBox.setValue(10);
+// or...
+// var spinBox = document.createElement("spin-box");
+// document.body.appendChild(spinBox);
 
 // listen for change event
 spinBox.addEventListener("change", function(evt) {
     console.log("spinBox value now", evt.target.value);
     console.log("make sure", spinBox.getValue());
+    console.log("make sure", spinBox.value);
 }, false);
-
 
 // spinBox can be added from html template
 var template = document.querySelector("#template");
@@ -35,5 +37,3 @@ templateSpinBox.addEventListener("change", function(evt) {
         templateSpinBox.style.setProperty("--input-background-color", "white");
     }
 }, false);
-
-
