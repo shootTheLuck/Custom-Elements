@@ -6,7 +6,9 @@ import {ModalWindow} from "./ModalWindow.js";
 // document.documentElement.setAttribute('window-theme', "plain");
 
 var modal = new ModalWindow({title: "Modal Window"});
-modal.name = "fred";
+// or
+// var modal = document.createElement("modal-window");
+
 const markup = `
 <label for="example-input">Example Input</label>
 <input id="example-input" type="text">
@@ -51,7 +53,6 @@ var templateModal = document.getElementById("modalWindow-from-template");
 templateModal.setAttribute('window-theme', "plain");
 templateModal.style.top = "50%";
 templateModal.addMarkup(markup);
-templateModal.name = "ed";
 templateModal.open();
 
 var button = document.createElement("button");

@@ -31,58 +31,177 @@ function makeElementDraggable(element, dragger) {
 }
 
 
+const template = document.createElement('template');
+
+template.innerHTML =
+`<style>
+    :host {
+
+        /*  theme overridable variables
+         *  replace "--" with "--window-"
+         */
+
+        --border-width: 3px;
+        --border-color: grey;
+        --border-radius: 6px;
+        --title-color: white;
+        --title-bar-background-color: rgba(50, 50, 50, 1.0);
+        --background-color: rgba(10, 10, 10, 1.0);
+        --color: white;
+
+        border-style: solid;
+        border-width: var(--window-border-width, var(--border-width));
+        border-color: var(--window-border-color, var(--border-color));
+        border-radius: var(--window-border-radius, var(--border-radius));
+        color: var(--color);
+        background-color: var(--background-color);
+        opacity: 1;
+        position: fixed;
+        top: 30%;
+        left: 35%;
+        width: 400px;
+        transition: opacity 80ms linear;
+        overflow: hidden;
+        resize: both;
+        white-space: nowrap;
+        user-select: none;
+    /*
+        visibility: hidden;
+    */
+        display: none;
+        flex-direction: column;
+    }
+
+    .title-bar {
+        border-bottom: solid 3px;
+        border-color: var(--window-border-color, inherit);
+        background-color: var(--window-title-bar-background-color, var(--title-bar-background-color));
+        flex-shrink: 0;
+        height: 32px;
+        line-height: 32px;
+        width: 100%;
+    }
+
+    .title {
+        color: var(--window-title-color, var(--title-color));
+        user-select: none;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        vertical-align: middle;
+    }
+
+    .client-area {
+        color: var(--window-color, inherit);
+        background-color: var(--window-background-color, inherit);
+        overflow: auto;
+        padding: 5px;
+        height: 100%;
+    }
+
+    .close-button {
+        background-color: rgba(180, 180, 180, 0);
+        border: 2px solid rgba(180, 180, 180, 0);
+        margin: 3px;
+        height: 22px;
+        width: 22px;
+        padding: 0;
+        position: absolute;
+        left : 100%;
+        transform: translate(-30px,0);
+    }
+
+    .close-button:hover,
+    .close-button:focus {
+        border: 2px solid grey;
+        background-color: rgb(180, 180, 180);
+        /*
+        cursor: pointer;
+        */
+    }
+
+    .close-button:active {
+        background-color: rgb(120,120,120);
+    }
+
+    /* https://stackoverflow.com/questions/18920542/draw-an-x-in-css*/
+
+    .close-button:before,
+    .close-button:after{
+        content: '';
+        position: absolute;
+        width: 12px;
+        height: 2px;
+        /* background-color will be color of the x*/
+        background-color: black;
+    }
+
+    .close-button:before{
+        transform: translate(1px, -1px) rotate(45deg) ;
+        left: 2px;
+    }
+    .close-button:after{
+        transform: translate(-1px, -1px) rotate(-45deg) ;
+        right: 2px;
+    }
+</style>
+
+<div class="title-bar">
+    <span class="title"></span>
+    <button class="close-button"></button>
+</div>
+
+<div class="client-area">
+
+</div>
+
+`;
+
 class ModalWindow extends HTMLElement {
 
     constructor(opts = {}) {
         super();
 
         const defaults = {
-            className: "modalWindow",
             width: "400px",
             resize: "both", //"none", "vertical", "horizontal"
             title: "Modal Window"
         };
 
-        this.className = opts.className || defaults.className;
-        this.style.width = opts.width || defaults.width;
-        this.style.resize = opts.resize || defaults.resize;
+        this.width = opts.width || defaults.width;
+        this.resize = opts.resize || defaults.resize;
 
-        this.topBar = document.createElement("div");
-        this.topBar.className = this.className + "-title-bar";
-        this.appendChild(this.topBar);
+        this.attachShadow({mode: "open"});
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-        this.titleText = document.createElement("span");
-        this.titleText.className = this.className + "-title";
-        this.topBar.appendChild(this.titleText);
-
-        this.closeButton = document.createElement("button");
-        this.closeButton.className = this.className + "-closeButton";
-        this.closeButton.addEventListener("click", this.close.bind(this));
-        this.topBar.appendChild(this.closeButton);
-
-        makeElementDraggable(this, this.topBar);
+        this.titleBar = this.shadowRoot.querySelector(".title-bar");
+        this.titleDisplay = this.shadowRoot.querySelector(".title");
+        makeElementDraggable(this, this.titleBar);
         this.setTitle(opts.title || defaults.title);
 
-        this.clientArea = document.createElement("div");
-        this.clientArea.className = this.className + "-client-area";
-        this.appendChild(this.clientArea);
+        this.closeButton = this.shadowRoot.querySelector(".close-button");
+        this.closeButton.addEventListener("click", this.close.bind(this));
+
+        this.clientArea = this.shadowRoot.querySelector(".client-area");
 
         this.openEvent = new Event("open");
         this.closedEvent = new Event("closed");
         this.closed = true;
-        this.init();
     }
 
-    init() {
+    connectedCallback() {
         // override appendChild
         this.appendChild = function(element) {
             this.clientArea.appendChild(element);
             return element;
-        }
+        };
+
+        this.style.width = this.width;
+        this.style.resize = this.resize;
     }
 
     setTitle(text) {
-        this.titleText.textContent = text;
+        this.titleDisplay.textContent = text;
     }
 
     addMarkup(string) {
