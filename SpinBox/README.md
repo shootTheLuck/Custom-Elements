@@ -2,7 +2,7 @@
 A spin box class made using vanilla Javascript and the Custom Elements API.
 It's adapted from Kate Morley's Spin Box Widget http://code.iamkate.com/javascript/spin-box-widget CC0 1.0
 
-[Live Demo Here](https://shootTheLuck.github.io/Spin-Box)
+[Live Demo Here](https://shootTheLuck.github.io/CustomElements/SpinBox)
 
 ## Why would I want to use this?
 I didn't like the look of the stock html input element type=number and found it to be un-stylable. I also wanted a different dynamic for the button behavior.

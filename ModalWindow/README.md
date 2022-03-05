@@ -1,7 +1,7 @@
 ## What is this?
 A ModalWindow class made using vanilla Javascript and the Custom Elements API.
 
-[Live Demo Here](https://shootTheLuck.github.io/Modal-Window)
+[Live Demo Here](https://shootTheLuck.github.io/CustomElements/ModalWindow)
 
 ## How do I use it?
 You'll want to reference modalWindow.css then:
