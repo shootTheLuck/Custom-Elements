@@ -1,7 +1,7 @@
 ## What is this?
 MenuBar, DropdownMenu, ContextMenu and MenuItem classes made using vanilla Javascript and the Custom Elements API.
 
-[Live Demo Here](https://shootTheLuck.github.io/Menus)
+[Live Demo Here](https://shootTheLuck.github.io/CustomElements/Menus)
 
 ## How do I use it?
 
