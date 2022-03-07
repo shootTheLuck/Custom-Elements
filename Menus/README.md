@@ -1,11 +1,12 @@
 ## What is this?
-A ModalWindow class made using vanilla Javascript and the Custom Elements API.
+MenuBar, DropdownMenu, ContextMenu and MenuItem classes made using vanilla Javascript and the Custom Elements API.
 
-[Live Demo Here](https://shootTheLuck.github.io/Modal-Window)
+[Live Demo Here](https://shootTheLuck.github.io/Menus)
 
 ## How do I use it?
 
 ```javascript
+// simple case:
 // import
 import {MenuBar} from "./MenuBar.js";
 
