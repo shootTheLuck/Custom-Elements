@@ -25,8 +25,10 @@ template.innerHTML =
 */
 
 :host {
+    background-color: white;
     border-color: rgb(132, 132, 132);
     border-radius: 0.2em;
+    color: initial;
 
     font-family: sans-serif;
     font-size: 0.9em;
@@ -39,7 +41,6 @@ template.innerHTML =
 
 input {
 
-    background-color: inherit;
     border-color: inherit;
     border-style: solid;
     border-width: 0.1em;
