@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Menu Bar Element</title>
+    <style>
+
+    #rectangle {
+        width: 800px;
+        height: 600px;
+        border: 2px solid black;
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
+    #square {
+        width: 100px;
+        height: 100px;
+        border: 2px solid black;
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    </style>
+</head>
+<body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div>
+        <div id="rectangle">
+            <div id="instructions">Right-click anywhere inside me for context menu..</div>
+            <div id="square" style="background: red"></div>
+        </div>
+    </div>
+    <br>
+    <script src="main.js" type="module"></script>
+
+</body>
+</html>
