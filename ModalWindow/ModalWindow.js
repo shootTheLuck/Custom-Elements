@@ -97,6 +97,7 @@ template.innerHTML =
         overflow: auto;
         padding: 5px;
         height: 100%;
+        display: block;
     }
 
     .close-button {
@@ -151,10 +152,9 @@ template.innerHTML =
     <button class="close-button"></button>
 </div>
 
-<div class="client-area">
+<slot class="client-area">
 
-</div>
-
+</slot>
 `;
 
 class ModalWindow extends HTMLElement {
