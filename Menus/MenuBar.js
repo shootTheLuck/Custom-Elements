@@ -6,16 +6,17 @@ const template = document.createElement("template");
 template.innerHTML =
 `<style>
     :host {
+        border-bottom: var(--menu-bar-border-bottom, 3px solid red);
+        background-color: var(--menu-bar-background-color, rgba(50, 50, 50, 0.1));
+        height: var(--menu-bar-height, 32px);
+        line-height: var(--menu-bar-height, 32px);
+        font-family: var(--menu-bar-font-family, Arial, Helvetica, sans-serif);
+        font-size: var(--menu-bar-font-size, 0.975em);
+
         display: block;
-        border-bottom: 3px solid red;
-        background-color: rgba(50, 50, 50, 0.1);
-        height: 32px;
-        line-height: 32px;
         width: 100%;
         padding: 0;
         margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 0.975em;
         -webkit-user-select: none;
         -ms-user-select: none;
         user-select: none;

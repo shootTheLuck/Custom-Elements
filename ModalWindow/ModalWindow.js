@@ -38,7 +38,7 @@ template.innerHTML =
     :host {
 
         /*  theme overridable variables
-         *  replace "--" with "--window-"
+         *  replace "--" with "--modal-window-"
          */
 
         --border-width: 3px;
@@ -50,9 +50,9 @@ template.innerHTML =
         --color: white;
 
         border-style: solid;
-        border-width: var(--window-border-width, var(--border-width));
-        border-color: var(--window-border-color, var(--border-color));
-        border-radius: var(--window-border-radius, var(--border-radius));
+        border-width: var(--modal-window-border-width, var(--border-width));
+        border-color: var(--modal-window-border-color, var(--border-color));
+        border-radius: var(--modal-window-border-radius, var(--border-radius));
         color: var(--color);
         background-color: var(--background-color);
         opacity: 1;
@@ -74,8 +74,8 @@ template.innerHTML =
 
     .title-bar {
         border-bottom: solid 3px;
-        border-color: var(--window-border-color, inherit);
-        background-color: var(--window-title-bar-background-color, var(--title-bar-background-color));
+        border-color: var(--modal-window-border-color, inherit);
+        background-color: var(--modal-window-title-bar-background-color, var(--title-bar-background-color));
         flex-shrink: 0;
         height: 32px;
         line-height: 32px;
@@ -83,7 +83,7 @@ template.innerHTML =
     }
 
     .title {
-        color: var(--window-title-color, var(--title-color));
+        color: var(--modal-window-title-color, var(--title-color));
         user-select: none;
         position: absolute;
         left: 50%;
@@ -92,8 +92,8 @@ template.innerHTML =
     }
 
     .client-area {
-        color: var(--window-color, inherit);
-        background-color: var(--window-background-color, inherit);
+        color: var(--modal-window-color, inherit);
+        background-color: var(--modal-window-background-color, inherit);
         overflow: auto;
         padding: 5px;
         height: 100%;

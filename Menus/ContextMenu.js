@@ -20,11 +20,13 @@ class ContextMenu extends DropdownMenu {
         this.style.position = "absolute";
         this.style.padding = "0";
 
-        // this.nameDisplay.style.display = "none";
-        this.menuItems.style.color = "var(--context-menu-items-color, inherit)";
-        this.menuItems.style.backgroundColor = "var(--context-menu-items-background-color, white)";
-        this.menuItems.style.borderColor = "var(--context-menu-items-border-color, grey)";
-        this.menuItems.style.borderWidth = "var(--context-menu-items-border-width, 0.1em)";
+        this.style.color = "var(--context-menu-color, inherit)";
+        this.style.backgroundColor = "var(--context-menu-background-color, white)";
+        this.style.borderColor = "var(--context-menu-border-color, grey)";
+        this.style.borderWidth = "var(--context-menu-border-width, 0.1em)";
+        this.style.borderRadius = "var(--context-menu-border-radius, 0)";
+        this.style.fontFamily = "var(--context-menu-font-family, Arial, Helvetica, sans-serif)";
+        this.style.fontSize = "var(--context-menu-font-size, inherit)";
 
         this.parentElement.addEventListener("contextmenu", (evt) => {
             if (this.autoDisplay) {
@@ -88,11 +90,6 @@ class ContextMenu extends DropdownMenu {
         }
     }
 
-    // addMenuItem(menuItem, opts = {}) {
-        // const contextMenuItem = super.addMenuItem(menuItem, opts);
-        // contextMenuItem.style.backgroundColor = "var(--context-menu-items-background-color, purple)";
-    // }
-
     addMenuItem(menuItem, opts = {}) {
 
         menuItem = (typeof menuItem === "string")? new ContextMenuItem(menuItem, opts) : menuItem;
@@ -118,7 +115,6 @@ class ContextMenu extends DropdownMenu {
             }
         }
     }
-
 
 }
 

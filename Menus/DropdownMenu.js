@@ -10,17 +10,17 @@ template.innerHTML =
         -webkit-user-select: none;
         -ms-user-select: none;
         user-select: none;
-
-
-        display: none;
-        color: inherit;
-        font-size: inherit;
-        font-family: inherit;
         position: fixed;
         border-style: solid;
-        border-color: grey;
-        border-width: 0.1em;
-        background-color: red;
+        display: none;
+        z-index: 30;
+        color: var(--dropdown-menu-color, inherit);
+        background-color: var(--dropdown-menu-background-color, white);
+        font-size: var(--dropdown-menu-font-size, inherit);
+        font-family: var(--dropdown-menu-font-family, inherit);
+
+        border-color: var(--dropdown-menu-border-color, grey);
+        border-width: var(--dropdown-menu-border-width, 0.1em);
     }
 
     /* don't show dotted lines when focused */
@@ -29,12 +29,6 @@ template.innerHTML =
     }
 
     .items {
-
-        color: var(--menu-item-color, inherit);
-        background-color: var(--menu-item-background-color, white);
-        font-size: var(--menu-item-font-size, inherit);
-        font-family: var(--menu-item-font-family, inherit);
-
         padding: 0;
         margin: 0;
         line-height: 1.5em;
