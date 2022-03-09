@@ -1,5 +1,6 @@
 
 import {DropdownMenu} from "./DropdownMenu.js";
+import {ContextMenuItem} from "./ContextMenuItem.js";
 
 class ContextMenu extends DropdownMenu {
 
@@ -19,7 +20,7 @@ class ContextMenu extends DropdownMenu {
         this.style.position = "absolute";
         this.style.padding = "0";
 
-        this.nameDisplay.style.display = "none";
+        // this.nameDisplay.style.display = "none";
         this.menuItems.style.color = "var(--context-menu-items-color, inherit)";
         this.menuItems.style.backgroundColor = "var(--context-menu-items-background-color, white)";
         this.menuItems.style.borderColor = "var(--context-menu-items-border-color, grey)";
@@ -30,11 +31,16 @@ class ContextMenu extends DropdownMenu {
                 this.open(evt);
             }
         });
+
+        this.addEventListener("blur", (evt) => {
+            this.close();
+        });
     }
 
     /* override */
     open(evt, specialLineItem) {
         super.open();
+        this.tabIndex = 0;
         evt.preventDefault();
         evt.stopPropagation();
         let x = evt.clientX;
@@ -76,15 +82,43 @@ class ContextMenu extends DropdownMenu {
 
     close() {
         super.close();
+        this.tabIndex = -1;
         if (this.previousFocusedElement) {
             this.previousFocusedElement.focus();
         }
     }
 
-    addMenuItem(menuItem, opts = {}) {
-        const contextMenuItem = super.addMenuItem(menuItem, opts);
+    // addMenuItem(menuItem, opts = {}) {
+        // const contextMenuItem = super.addMenuItem(menuItem, opts);
         // contextMenuItem.style.backgroundColor = "var(--context-menu-items-background-color, purple)";
+    // }
+
+    addMenuItem(menuItem, opts = {}) {
+
+        menuItem = (typeof menuItem === "string")? new ContextMenuItem(menuItem, opts) : menuItem;
+        if (opts.special == true) {
+            menuItem.isSpecial = true;
+        }
+        menuItem.addEventListener("selection", (evt) => {
+            this.selectionEvent.menuItem = menuItem;
+            this.selectionEvent.value = evt.value;
+            this.dispatchEvent(this.selectionEvent);
+            this.close();
+        });
+
+        this.appendChild(menuItem);
+        return menuItem;
     }
+
+
+    removeSpecialMenuItems(propertyName) {
+        for (let i = this.children.length; i--;) {
+            if (this.children[i].isSpecial) {
+                this.removeChild(this.children[i]);
+            }
+        }
+    }
+
 
 }
 

@@ -89,4 +89,8 @@ contextMenu.addEventListener("selection", (evt) => {
 });
 
 
+// document.addEventListener("keydown", (evt) => {
+    // console.log(document.activeElement.innerText);
+// });
+
 

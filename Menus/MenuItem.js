@@ -87,6 +87,10 @@ class MenuItem extends HTMLElement {
 
     }
 
+    connectedCallback() {
+
+    }
+
     get name() {
         return this.nameDisplay.innerText;
     }
