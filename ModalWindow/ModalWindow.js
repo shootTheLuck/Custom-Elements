@@ -56,7 +56,7 @@ template.innerHTML =
         color: var(--color);
         background-color: var(--background-color);
         opacity: 1;
-        position: fixed;
+        position: absolute;
         top: 30%;
         left: 35%;
         width: 400px;
@@ -98,6 +98,7 @@ template.innerHTML =
         padding: 5px;
         height: 100%;
         display: block;
+        position: relative;
     }
 
     .close-button {
