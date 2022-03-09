@@ -6,9 +6,7 @@ const template = document.createElement("template");
 template.innerHTML =
 `<style>
     :host {
-        position: absolute;
-        top: 0;
-        left: 0;
+        display: block;
         border-bottom: 3px solid red;
         background-color: rgba(50, 50, 50, 0.1);
         height: 32px;
@@ -22,7 +20,6 @@ template.innerHTML =
         -ms-user-select: none;
         user-select: none;
     }
-
 </style>
 
 <slot></slot>

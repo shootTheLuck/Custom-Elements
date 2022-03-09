@@ -6,7 +6,7 @@ import {MenuItem} from "./MenuItem.js";
 import {ContextMenu} from "./ContextMenu.js";
 
 var menuBar = new MenuBar();
-document.body.appendChild(menuBar);
+document.body.prepend(menuBar);
 
 // listen for selection from entire menubar:
 menuBar.addEventListener("selection", (evt) => {
