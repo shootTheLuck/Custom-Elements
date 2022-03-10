@@ -7,15 +7,17 @@ function makeElementDraggable(element, dragger) {
     dragger.addEventListener("mousedown", startDrag);
 
     function startDrag(evt) {
-        initialOffsetLeft = evt.clientX - element.offsetLeft;
-        initialOffsetTop = evt.clientY - element.offsetTop;
-        document.addEventListener("mouseup", endDrag, true);
-        document.addEventListener("mousemove", drag, true);
-        /* re-append to put this higher in the stacking context */
-        /* delay to allow other elements to lose focus */
-        setTimeout(function() {
-            element.parentElement.appendChild(element);
-        }, 1);
+        if (evt.button === 0) {
+            initialOffsetLeft = evt.clientX - element.offsetLeft;
+            initialOffsetTop = evt.clientY - element.offsetTop;
+            document.addEventListener("mouseup", endDrag, true);
+            document.addEventListener("mousemove", drag, true);
+            /* re-append to put this higher in the stacking context */
+            /* delay to allow other elements to lose focus */
+            setTimeout(function() {
+                element.parentElement.appendChild(element);
+            }, 1);
+        }
     }
 
     function drag(evt) {
