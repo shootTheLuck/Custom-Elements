@@ -1,6 +1,5 @@
 
 import {BaseMenu} from "./BaseMenu.js";
-import {ContextMenuItem} from "./ContextMenuItem.js";
 
 const template = document.createElement("template");
 
