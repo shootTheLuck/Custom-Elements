@@ -18,7 +18,7 @@ template.innerHTML =
         color: var(--context-menu-color, inherit);
         background-color: var(--context-menu-background-color, white);
         font-size: var(--context-menu-font-size, inherit);
-        font-family: var(--context-menu-font-family, inherit);
+        font-family: var(--context-menu-font-family, Arial, Helvetica, sans-serif);
 
         border-color: var(--context-menu-border-color, grey);
         border-width: var(--context-menu-border-width, 0.1em);
