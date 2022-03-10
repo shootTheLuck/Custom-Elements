@@ -1,16 +1,19 @@
 
-
 import {MenuBar} from "./MenuBar.js";
 import {DropdownMenu} from "./DropdownMenu.js";
 import {MenuItem} from "./MenuItem.js";
 import {ContextMenu} from "./ContextMenu.js";
+
 
 var menuBar = new MenuBar();
 document.body.prepend(menuBar);
 
 // listen for selection from entire menubar:
 menuBar.addEventListener("selection", (evt) => {
-    console.log("from menuBar event", evt.value);
+    console.log("you selected '" + evt.value + "' from the menu bar");
+    if (evt.value === "Repo on Github") {
+        window.location = "https://github.com/shootTheLuck/CustomElements";
+    }
 });
 
 // add menu and multiple plain text menuItems
@@ -54,14 +57,12 @@ function changeItemName(selectedItem) {
 
 
 let editMenu = menuBar.addDropdownMenu("Edit", ["Copy", "Paste"]);
-let anotherMenu = document.createElement("dropdown-menu");
-anotherMenu.name = "Another";
+let aboutMenu = document.createElement("dropdown-menu");
+aboutMenu.name = "About";
 
-
-let test = new MenuItem("Test");
-
-anotherMenu.addMenuItem(test);
-menuBar.addDropdownMenu(anotherMenu);
+let repoLocation = new MenuItem("Repo on Github");
+aboutMenu.addMenuItem(repoLocation);
+menuBar.addDropdownMenu(aboutMenu);
 
 
 var rectangleElement = document.getElementById("rectangle");
@@ -88,9 +89,5 @@ contextMenu.addEventListener("selection", (evt) => {
     console.log("you selected:", evt.value);
 });
 
-
-// document.addEventListener("keydown", (evt) => {
-    // console.log(document.activeElement.innerText);
-// });
 
 
