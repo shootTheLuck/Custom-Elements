@@ -48,7 +48,7 @@ template.innerHTML =
 
 class MenuItem extends HTMLElement {
 
-    constructor(name, opts = {icon: null, toolTip: null, className: null, special: false}) {
+    constructor(name, opts = {icon: null, toolTip: null, special: false}) {
         super();
         this.selectionEvent = new Event("selection");
 
@@ -80,10 +80,6 @@ class MenuItem extends HTMLElement {
                 this.dispatchEvent(this.selectionEvent);
             }
         });
-
-        if (opts.className) {
-            this.classList.add(opts.className);
-        }
 
     }
 

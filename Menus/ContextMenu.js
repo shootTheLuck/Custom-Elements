@@ -1,32 +1,61 @@
 
-import {DropdownMenu} from "./DropdownMenu.js";
+import {BaseMenu} from "./BaseMenu.js";
 import {ContextMenuItem} from "./ContextMenuItem.js";
 
-class ContextMenu extends DropdownMenu {
+const template = document.createElement("template");
+
+template.innerHTML =
+`<style>
+
+    :host  {
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        position: fixed;
+        border-style: solid;
+        display: none;
+        z-index: 30;
+        color: var(--context-menu-color, inherit);
+        background-color: var(--context-menu-background-color, white);
+        font-size: var(--context-menu-font-size, inherit);
+        font-family: var(--context-menu-font-family, inherit);
+
+        border-color: var(--context-menu-border-color, grey);
+        border-width: var(--context-menu-border-width, 0.1em);
+        border-radius: var(--context-menu-border-radius, 0);
+    }
+
+    /* don't show dotted lines when focused */
+    :host(:focus) {
+        outline: 0;
+    }
+
+    .items {
+        padding: 0;
+        margin: 0;
+        line-height: 1.5em;
+    }
+
+</style>
+
+`;
+class ContextMenu extends BaseMenu {
 
     constructor(name, menuItems = []) {
         super(name, menuItems);
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
 
         this.autoDisplay = true;
         this.positionedFromParent = true;
 
         this.previousFocusedElement = null;
         this.targetElement = null;
-        this.itemHovered = null;
     }
 
     connectedCallback() {
         super.connectedCallback();
         this.style.position = "absolute";
         this.style.padding = "0";
-
-        this.style.color = "var(--context-menu-color, inherit)";
-        this.style.backgroundColor = "var(--context-menu-background-color, white)";
-        this.style.borderColor = "var(--context-menu-border-color, grey)";
-        this.style.borderWidth = "var(--context-menu-border-width, 0.1em)";
-        this.style.borderRadius = "var(--context-menu-border-radius, 0)";
-        this.style.fontFamily = "var(--context-menu-font-family, Arial, Helvetica, sans-serif)";
-        this.style.fontSize = "var(--context-menu-font-size, inherit)";
 
         this.parentElement.addEventListener("contextmenu", (evt) => {
             if (this.autoDisplay) {
@@ -43,6 +72,7 @@ class ContextMenu extends DropdownMenu {
     open(evt, specialLineItem) {
         super.open();
         this.tabIndex = 0;
+
         evt.preventDefault();
         evt.stopPropagation();
         let x = evt.clientX;
@@ -51,7 +81,8 @@ class ContextMenu extends DropdownMenu {
         this.removeSpecialMenuItems();
 
         if (specialLineItem) {
-            this.addMenuItem(specialLineItem, {special: true});
+            const menuItem = this.addMenuItem(specialLineItem);
+            menuItem.isSpecial = true;
         }
 
         let rect = this.getBoundingClientRect();
@@ -75,7 +106,6 @@ class ContextMenu extends DropdownMenu {
             this.style.top = y + window.scrollY + "px";
         }
 
-        this.itemHovered = null;
         this.itemSelected = null;
         this.targetElement = evt.target;
         this.previousFocusedElement = document.activeElement;
@@ -85,28 +115,11 @@ class ContextMenu extends DropdownMenu {
     close() {
         super.close();
         this.tabIndex = -1;
+
         if (this.previousFocusedElement) {
             this.previousFocusedElement.focus();
         }
     }
-
-    addMenuItem(menuItem, opts = {}) {
-
-        menuItem = (typeof menuItem === "string")? new ContextMenuItem(menuItem, opts) : menuItem;
-        if (opts.special == true) {
-            menuItem.isSpecial = true;
-        }
-        menuItem.addEventListener("selection", (evt) => {
-            this.selectionEvent.menuItem = menuItem;
-            this.selectionEvent.value = evt.value;
-            this.dispatchEvent(this.selectionEvent);
-            this.close();
-        });
-
-        this.appendChild(menuItem);
-        return menuItem;
-    }
-
 
     removeSpecialMenuItems(propertyName) {
         for (let i = this.children.length; i--;) {

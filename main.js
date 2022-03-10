@@ -1,11 +1,10 @@
 
 
 import {MenuBar} from "./Menus/MenuBar.js";
+import {BaseMenu} from "./Menus/BaseMenu.js";
 import {DropdownMenu} from "./Menus/DropdownMenu.js";
 import {MenuItem} from "./Menus/MenuItem.js";
 import {ContextMenu} from "./Menus/ContextMenu.js";
-
-
 import {ModalWindow} from "./ModalWindow/ModalWindow.js";
 
 
@@ -34,32 +33,27 @@ menuBar.addEventListener("selection", (evt) => {
 
 
 
-menu1.addDividerAfter("Close");
+// menu1.addDividerAfter("Close");
 
 // add menuItem to a menu at any point
-let wowo = menu1.addMenuItem("wowo");
+// let wowo = menu1.addMenuItem("wowo");
 
 // listen for selection from single menu:
-menu1.addEventListener("selection", (evt) => {
-    console.log("from menu1 event", evt.value);
-    if (evt.value === "wowo") {
-        menu1.getMenuItem("wowo").classList.add("red");
-        menu1.disableMenuItem("Save");
-        // menu1.name = "what?";
-        // menu1.getMenuItem("save").name = "nope";
-    }
-    if (evt.value === "Close") {
-        menu1.getMenuItem("wowo").classList.remove("red");
-        menu1.enableMenuItem("Save");
-        // menu1.getMenuItem("nope").name = "save";
-        // menu1.name = "WHATT";
-        // menu1.disabled = true;
-    }
-});
+// menu1.addEventListener("selection", (evt) => {
+    // console.log("from menu1 event", evt.value);
+    // if (evt.value === "wowo") {
+        // menu1.getMenuItem("wowo").classList.add("red");
+        // menu1.disableMenuItem("Save");
+    // }
+    // if (evt.value === "Close") {
+        // menu1.getMenuItem("wowo").classList.remove("red");
+        // menu1.enableMenuItem("Save");
+    // }
+// });
 
-wowo.addEventListener("selection", (evt) => {
-    console.log("from menuItem event", evt.value);
-});
+// wowo.addEventListener("selection", (evt) => {
+    // console.log("from menuItem event", evt.value);
+// });
 
 
 function handleShowButton() {
@@ -71,15 +65,15 @@ function changeItemName(selectedItem) {
 }
 
 
-let editMenu = menuBar.addDropdownMenu("Edit", ["Copy", "Paste"]);
-let anotherMenu = document.createElement("dropdown-menu");
-anotherMenu.name = "Another";
+// let editMenu = menuBar.addDropdownMenu("Edit", ["Copy", "Paste"]);
+// let anotherMenu = document.createElement("dropdown-menu");
+// anotherMenu.name = "Another";
 
 
 let test = new MenuItem("Test");
 
-anotherMenu.addMenuItem(test);
-menuBar.addDropdownMenu(anotherMenu);
+menu1.addMenuItem(test);
+// menuBar.addDropdownMenu(anotherMenu);
 
 
 var rectangleElement = document.getElementById("rectangle");
@@ -102,9 +96,9 @@ rectangleElement.addEventListener("contextmenu", (evt) => {
     }
 });
 
-contextMenu.addEventListener("selection", (evt) => {
-    console.log("you selected:", evt.value);
-});
+// contextMenu.addEventListener("selection", (evt) => {
+    // console.log("you selected:", evt.value);
+// });
 
 
 

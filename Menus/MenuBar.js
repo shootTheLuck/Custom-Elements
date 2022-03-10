@@ -42,7 +42,7 @@ class MenuBar extends HTMLElement {
     }
 
     addDropdownMenu(menu, menuItems = []) {
-
+console.log("here", menuItems);
         menu = (typeof menu === "string")? new DropdownMenu(menu, menuItems) : menu;
 
         const nameDisplay = document.createElement("label");
