@@ -62,14 +62,12 @@ template.innerHTML =
         top: 30%;
         left: 35%;
         width: 400px;
-        transition: opacity 80ms linear;
+        transition: opacity 40ms linear;
         overflow: hidden;
         resize: both;
         white-space: nowrap;
         user-select: none;
-    /*
-        visibility: hidden;
-    */
+
         display: none;
         flex-direction: column;
     }
@@ -166,12 +164,10 @@ class ModalWindow extends HTMLElement {
         super();
 
         const defaults = {
-            width: "400px",
             resize: "both", //"none", "vertical", "horizontal"
             title: "Modal Window"
         };
 
-        this.width = opts.width || defaults.width;
         this.resize = opts.resize || defaults.resize;
 
         this.attachShadow({mode: "open"});
@@ -199,7 +195,6 @@ class ModalWindow extends HTMLElement {
             return element;
         };
 
-        this.style.width = this.width;
         this.style.resize = this.resize;
     }
 
