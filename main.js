@@ -5,18 +5,18 @@ import {BaseMenu} from "./Menus/BaseMenu.js";
 import {DropdownMenu} from "./Menus/DropdownMenu.js";
 import {MenuItem} from "./Menus/MenuItem.js";
 import {ContextMenu} from "./Menus/ContextMenu.js";
-import {ModalWindow} from "./ModalWindow/ModalWindow.js";
+import {ApplicationWindow} from "./ApplicationWindow/ApplicationWindow.js";
 
 
-document.body.setAttribute('theme', "plain");
+document.body.setAttribute("theme", "plain");
 var menuBar = new MenuBar();
 document.body.prepend(menuBar);
 
-var modal = new ModalWindow({title: "Modal Window"});
-document.body.append(modal);
+var appWindow = new ApplicationWindow({title: "Application Window"});
+document.body.append(appWindow);
 
-var modalMenuBar = new MenuBar();
-modal.appendChild(modalMenuBar);
+var appMenuBar = new MenuBar();
+appWindow.appendChild(appMenuBar);
 
 
 // add menu and multiple plain text menuItems
@@ -26,12 +26,9 @@ let menu1 = menuBar.addDropdownMenu("Menu1", ["Open...", "Close", "Save", "Cance
 menuBar.addEventListener("selection", (evt) => {
     console.log("from menuBar event", evt.value);
     if (evt.value === "Open...") {
-        modal.open();
+        appWindow.open();
     }
 });
-
-
-
 
 // menu1.addDividerAfter("Close");
 

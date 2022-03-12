@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Code Editor Element</title>
+    <style>
+
+        [window-theme=dark] {
+            --code-editor-background-color: black;
+            --code-editor-color: white;
+            --code-editor-caret-color: white;
+        }
+
+        body {
+            background-color: darkgrey;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        code-editor {
+            color: blue;
+            background-color: white;
+            caret-color: black;
+            box-shadow: 10px 10px 5px #252525;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+    </style>
+</head>
+<body>
+    <script src="main.js" type="module"></script>
+</body>
+</html>

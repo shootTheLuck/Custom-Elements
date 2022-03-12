@@ -1,9 +1,12 @@
 
-import {ModalWindow} from "./ModalWindow.js";
+import {ApplicationWindow} from "./ApplicationWindow.js";
 
-var modal = new ModalWindow({title: "Modal Window"});
+var appWindow = new ApplicationWindow({title: "Application Window"});
 // or
-// var modal = document.createElement("modal-window");
+// var appWindow = document.createElement("application-window");
+
+// set theme at any time for entire page
+// document.body.setAttribute("window-theme", "plain");
 
 const markup = `
 <label for="example-input">Example Input</label>
@@ -20,33 +23,32 @@ const markup = `
 </div>
 `;
 
-modal.addMarkup(markup);
-modal.addEventListener("closed", (evt) => {
-    console.log("modal closed");
+appWindow.addMarkup(markup);
+appWindow.addEventListener("closed", (evt) => {
+    console.log("app closed");
 });
-modal.style.top = "20%";
-document.body.appendChild(modal);
-modal.open();
+appWindow.style.top = "20%";
+document.body.appendChild(appWindow);
+appWindow.open();
 
-var showHideModalButton = document.getElementById("showHideModalBtn");
-showHideModalButton.onclick = function() {
-    if (modal.closed) {
-        modal.open();
+var showHideAppWindowBtn = document.getElementById("showHideAppWindowBtn");
+showHideAppWindowBtn.onclick = function() {
+    if (appWindow.closed) {
+        appWindow.open();
     } else {
-        modal.close();
+        appWindow.close();
     }
 };
 
 var button = document.createElement("button");
 button.innerHTML = "WOWOWO";
-modal.appendChild(button);
+appWindow.appendChild(button);
 
-var template = document.querySelector('#template');
+var template = document.querySelector("#template");
 let content = template.content;
 document.body.appendChild(content);
 
-var templateModal = document.getElementById("modalWindow-from-template");
-templateModal.setAttribute('window-theme', "plain");
+var templateModal = document.getElementById("appWindow-from-template");
 templateModal.style.top = "50%";
 templateModal.addMarkup(markup);
 templateModal.open();
@@ -55,8 +57,8 @@ var button = document.createElement("button");
 button.innerHTML = "WOWOWO";
 templateModal.appendChild(button);
 
-var showHideTemplateModalButton = document.getElementById("showHideTemplateModalBtn");
-showHideTemplateModalButton.onclick = function() {
+var showHideTemplateAppWindowButton = document.getElementById("showHideTemplateAppWindowButton");
+showHideTemplateAppWindowButton.onclick = function() {
     if (templateModal.closed) {
         templateModal.open();
     } else {

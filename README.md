@@ -2,5 +2,5 @@
 
 #### Custom HTML Elements:
 Menus [demo](https://shoottheluck.github.io/CustomElements/Menus)<br>
-ModalWindow [demo](https://shoottheluck.github.io/CustomElements/ModalWindow)<br>
+ApplicationWindow [demo](https://shoottheluck.github.io/CustomElements/ApplicationWindow)<br>
 SpinBox [demo](https://shoottheluck.github.io/CustomElements/SpinBox)<br>

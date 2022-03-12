@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Application Window Element</title>
+    <style>
+
+        [window-theme=plain] {
+            --application-window-title-bar-background-color: DimGrey;
+            --application-window-title-color: white;
+            --application-window-title-font-family: Arial;
+            --application-window-background-color: #fafafa;
+            --application-window-color: #151515;
+            --application-window-border-width: 2px;
+            --application-window-border-color: #151515;
+            --application-window-border-radius: 0;
+        }
+        button {
+            color: blue;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="info">
+        <a href="https://github.com/shootTheLuck/CustomElements">Repo on github</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <br>
+    <br>
+    <br>
+    <div id="heading">Custom Application Window Element.</div>
+    <button id="showHideAppWindowBtn">Show/Hide Application Window</button>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div>Application Window from templated HTML:</div>
+    <template id="template">
+        <application-window id="appWindow-from-template"></application-window>
+    </template>
+    <button id="showHideTemplateAppWindowButton">Show/Hide Template Application Window</button>
+
+    <script src="main.js" type="module"></script>
+
+</body>
+</html>

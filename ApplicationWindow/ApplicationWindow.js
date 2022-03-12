@@ -39,24 +39,32 @@ template.innerHTML =
 `<style>
     :host {
 
-        /*  theme overridable variables
-         *  replace "--" with "--modal-window-"
-         */
+        /*  theme overridable variables */
 
-        --border-width: 3px;
-        --border-color: grey;
-        --border-radius: 6px;
-        --title-color: white;
-        --title-bar-background-color: rgba(50, 50, 50, 1.0);
-        --background-color: rgba(10, 10, 10, 1.0);
-        --color: white;
+        --title-bar-color: var(--application-window-title-bar-color, white);
+        --title-bar-background-color: var(--application-window-title-bar-color, rgba(50, 50, 50, 1.0));
+        --title-bar-font-family: var(--application-window-title-bar-font-family, inherit);
+        --title-bar-font-style: var(--application-window-title-bar-font-style, inherit);
+        --title-bar-font-size: var(--application-window-title-bar-font-size, inherit);
+
+        --color: var(--application-window-color, white);
+        --background-color: var(--application-window-background-color, rgba(10, 10, 10, 1.0));
+        --font-family: var(--application-window-font-family, inherit);
+        --font-style: var(--application-window-font-style, inherit);
+        --font-size: var(--application-window-font-size, inherit);
+        --border-width: var(--application-window-border-width, 3px);
+        --border-color: var(--application-window-border-color, grey);
+        --border-radius: var(--application-window-border-radius, 6px);
 
         border-style: solid;
-        border-width: var(--modal-window-border-width, var(--border-width));
-        border-color: var(--modal-window-border-color, var(--border-color));
-        border-radius: var(--modal-window-border-radius, var(--border-radius));
+        border-width: var(--border-width);
+        border-color: var(--border-color);
+        border-radius: var(--border-radius);
         color: var(--color);
         background-color: var(--background-color);
+        font-family: var(--font-family);
+        font-style: var(--font-style);
+        font-size: var(--font-size);
         opacity: 1;
         position: absolute;
         top: 30%;
@@ -73,9 +81,10 @@ template.innerHTML =
     }
 
     .title-bar {
+        color: var(--title-bar-color);
+        background-color: var(--title-bar-background-color);
         border-bottom: solid 3px;
-        border-color: var(--modal-window-border-color, inherit);
-        background-color: var(--modal-window-title-bar-background-color, var(--title-bar-background-color));
+        border-color: inherit;
         flex-shrink: 0;
         height: 32px;
         line-height: 32px;
@@ -83,7 +92,6 @@ template.innerHTML =
     }
 
     .title {
-        color: var(--modal-window-title-color, var(--title-color));
         user-select: none;
         position: absolute;
         left: 50%;
@@ -92,8 +100,11 @@ template.innerHTML =
     }
 
     .client-area {
-        color: var(--modal-window-color, inherit);
-        background-color: var(--modal-window-background-color, inherit);
+        color: inherit;
+        background-color: inherit;
+        font-family: inherit;
+        font-style: inherit;
+        font-size: inherit;
         overflow: auto;
         padding: 5px;
         height: 100%;
@@ -153,19 +164,19 @@ template.innerHTML =
     <button class="close-button"></button>
 </div>
 
-<slot class="client-area">
+<slot name="client-area" class="client-area">
 
 </slot>
 `;
 
-class ModalWindow extends HTMLElement {
+class ApplicationWindow extends HTMLElement {
 
     constructor(opts = {}) {
         super();
 
         const defaults = {
+            title: "Application Window",
             resize: "both", //"none", "vertical", "horizontal"
-            title: "Modal Window"
         };
 
         this.resize = opts.resize || defaults.resize;
@@ -186,15 +197,17 @@ class ModalWindow extends HTMLElement {
         this.openEvent = new Event("open");
         this.closedEvent = new Event("closed");
         this.closed = true;
+
+        // override appendChild
+        // give element a named slot so it can be styled by global css
+        this.appendChild = function(element) {
+            element.setAttribute("slot", "client-area");
+            this.append(element);
+            return element;
+        };
     }
 
     connectedCallback() {
-        // override appendChild
-        this.appendChild = function(element) {
-            this.clientArea.appendChild(element);
-            return element;
-        };
-
         this.style.resize = this.resize;
     }
 
@@ -203,7 +216,12 @@ class ModalWindow extends HTMLElement {
     }
 
     addMarkup(string) {
-        this.clientArea.insertAdjacentHTML("beforeend", string);
+        // package in an element with a named slot
+        // so it can be styled by global css
+        const div = document.createElement("div");
+        div.setAttribute("slot", "client-area");
+        div.insertAdjacentHTML("beforeend", string);
+        this.append(div);
     }
 
     addShadow(element, clone) {
@@ -241,6 +259,6 @@ class ModalWindow extends HTMLElement {
     }
 }
 
-customElements.define("modal-window", ModalWindow);
+customElements.define("application-window", ApplicationWindow);
 
-export {ModalWindow};
+export {ApplicationWindow};
