@@ -28,33 +28,22 @@ let wowo = fileMenu.addMenuItem("wowo");
 fileMenu.addEventListener("selection", (evt) => {
     console.log("from fileMenu event", evt.value);
     if (evt.value === "wowo") {
-        fileMenu.getMenuItem("wowo").classList.add("red");
         fileMenu.disableMenuItem("Save");
         // fileMenu.name = "what?";
         // fileMenu.getMenuItem("save").name = "nope";
+        // fileMenu.getMenuItem("wowo").classList.add("red");
     }
     if (evt.value === "Close") {
-        fileMenu.getMenuItem("wowo").classList.remove("red");
         fileMenu.enableMenuItem("Save");
         // fileMenu.getMenuItem("nope").name = "save";
+        // fileMenu.getMenuItem("wowo").classList.remove("red");
         // fileMenu.name = "WHATT";
-        // fileMenu.disabled = true;
     }
 });
 
 wowo.addEventListener("selection", (evt) => {
     console.log("from menuItem event", evt.value);
 });
-
-
-function handleShowButton() {
-    console.log("showing something");
-}
-
-function changeItemName(selectedItem) {
-    selectedItem.innerText = "wowo you did it";
-}
-
 
 let editMenu = menuBar.addDropdownMenu("Edit", ["Copy", "Paste"]);
 let aboutMenu = document.createElement("dropdown-menu");
@@ -65,13 +54,14 @@ aboutMenu.addMenuItem(repoLocation);
 menuBar.addDropdownMenu(aboutMenu);
 
 
+//********************** context menu ********************************
+
 var rectangleElement = document.getElementById("rectangle");
 var squareElement = document.getElementById("square");
 
 let contextMenu = new ContextMenu("Edit", ["Copy", "Paste"]);
 contextMenu.autoDisplay = false;
 rectangleElement.appendChild(contextMenu);
-
 
 // Listen for contextmenu event from its parent element.
 // Make decisions on what to show in the menu before displaying:
@@ -87,6 +77,16 @@ rectangleElement.addEventListener("contextmenu", (evt) => {
 
 contextMenu.addEventListener("selection", (evt) => {
     console.log("you selected:", evt.value);
+
+    let targetElement = contextMenu.targetElement;
+    if (evt.value === "Change Color") {
+        let color = targetElement.style.backgroundColor;
+        if (color === "red") {
+            targetElement.style.backgroundColor = "blue";
+        } else {
+            targetElement.style.backgroundColor = "red";
+        }
+    }
 });
 
 
