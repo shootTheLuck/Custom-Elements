@@ -356,7 +356,6 @@ class CodeEditor extends HTMLElement {
     }
 
     addNewLine() {
-        console.error('adding');
         const existing = this.input.value;
         const {selectionStart, selectionEnd} = this.input;
         var line = this.getSelectionLines().value[0];
