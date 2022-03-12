@@ -2,8 +2,8 @@
 Dependency-free and fairly simple ui widgets (some of which should probably not be widgets at all, but here we are).
 
 Goals for each are:
-1. to conform to [Custom Elements Specification](https://html.spec.whatwg.org/multipage/scripting.html#custom-elements),
-2. to be styleable in the normal way,
+1. to conform to the [Custom Elements Specification](https://html.spec.whatwg.org/multipage/scripting.html#custom-elements),
+2. to be styleable with .css in the normal way,
 3. to be themeable via `document.documentElement.setAttribute("window-theme", "theme-name");`
 4. to be easy and sane to use
 
