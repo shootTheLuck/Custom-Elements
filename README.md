@@ -6,6 +6,7 @@ Goals for each are:
 2. to be styleable in the normal way,
 3. to be themeable via `document.documentElement.setAttribute("window-theme", "theme-name");`
 4. to be easy and sane to use
+
 Would **love** to receive any feedback, issues, or contributions!
 
 #### Custom HTML Elements:
