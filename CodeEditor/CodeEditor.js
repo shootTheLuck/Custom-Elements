@@ -70,6 +70,13 @@ template.innerHTML =
         box-sizing: border-box;
     }
 
+    .error {
+        text-decoration-line: underline;
+        text-decoration-style: wavy;
+        text-decoration-color: red;
+        text-decoration-skip: spaces;
+    }
+
     .gutter {
         width: 2em;
         padding: 0.6em 0.25em 0.6em 0;
@@ -305,7 +312,7 @@ class CodeEditor extends HTMLElement {
             const displayLines = formattedHTML.split("\n");
             this.errorLines.forEach((number) => {
                 if (displayLines[number]) {
-                    displayLines[number] = `<span class="codeEditor-error">${displayLines[number]}</span>`;
+                    displayLines[number] = `<span class="error">${displayLines[number]}</span>`;
                 } else {
                     this.clearErrorAtLine(number);
                 }
