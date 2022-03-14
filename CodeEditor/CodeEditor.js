@@ -169,9 +169,11 @@ class CodeEditor extends HTMLElement {
     }
 
     connectedCallback() {
-        // this.updateDisplay();
-        // this.saveState();
-        // this.syncScroll();
+        // dubious method here
+        // if (this.textContent !== "") {
+            // this.setValue(this.textContent);
+            // this.textContent = "";
+        // }
     }
 
     getValue() {
