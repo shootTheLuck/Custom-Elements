@@ -8,6 +8,7 @@ import {ApplicationWindow} from "../ApplicationWindow/ApplicationWindow.js";
 const applicationWindow = new ApplicationWindow({title: "Code Editor"});
 document.body.appendChild(applicationWindow);
 applicationWindow.open();
+applicationWindow.maximize();
 
 var codeEditor = new CodeEditor();
 applicationWindow.appendChild(codeEditor);
