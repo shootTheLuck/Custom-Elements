@@ -60,6 +60,7 @@ template.innerHTML =
         border-width: var(--border-width);
         border-color: var(--border-color);
         border-radius: var(--border-radius);
+        box-sizing: border-box;
         color: var(--color);
         background-color: var(--background-color);
         font-family: var(--font-family);
@@ -72,6 +73,7 @@ template.innerHTML =
         width: 400px;
         transition: opacity 40ms linear;
         overflow: hidden;
+        margin: 0;
         resize: both;
         white-space: nowrap;
         user-select: none;
@@ -256,6 +258,13 @@ class ApplicationWindow extends HTMLElement {
             this.parentElement.appendChild(this);
             this.dispatchEvent(this.openEvent);
         }
+    }
+
+    maximize() {
+        this.style.left = 0;
+        this.style.top = 0;
+        this.style.width = "100%";
+        this.style.height = "100%";
     }
 }
 
