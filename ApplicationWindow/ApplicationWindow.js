@@ -179,22 +179,30 @@ class ApplicationWindow extends HTMLElement {
         const defaults = {
             title: "Application Window",
             resize: "both", //"none", "vertical", "horizontal"
+            draggable: true,
+            closeable: true,
         };
-
-        this.resize = opts.resize || defaults.resize;
 
         this.attachShadow({mode: "open"});
         this.shadowRoot.appendChild(template.content.cloneNode(true));
 
         this.titleBar = this.shadowRoot.querySelector(".title-bar");
         this.titleDisplay = this.shadowRoot.querySelector(".title");
-        makeElementDraggable(this, this.titleBar);
-        this.setTitle(opts.title || defaults.title);
-
         this.closeButton = this.shadowRoot.querySelector(".close-button");
-        this.closeButton.addEventListener("click", this.close.bind(this));
-
         this.clientArea = this.shadowRoot.querySelector(".client-area");
+
+        this.setTitle(opts.title || defaults.title);
+        this.resize = (opts.resize !== undefined)? opts.resize : defaults.resize;
+
+        const draggable = (opts.draggable !== undefined)? opts.draggable : defaults.draggable;
+        const closeable = (opts.closeable !== undefined)? opts.closeable : defaults.closeable;
+
+        if (draggable) {
+            makeElementDraggable(this, this.titleBar);
+        }
+        if (closeable) {
+            this.closeButton.addEventListener("click", this.close.bind(this));
+        }
 
         this.openEvent = new Event("open");
         this.closedEvent = new Event("closed");
