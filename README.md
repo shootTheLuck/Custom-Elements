@@ -7,7 +7,7 @@ Goals for each are:
 3. to be themeable via `document.documentElement.setAttribute("window-theme", "theme-name");`
 4. to be easy and sane to use
 
-Would **love** to receive any feedback, issues, or contributions!
+Would love to receive any feedback, issues, or contributions!
 
 #### Custom HTML Elements:
 ApplicationWindow [demo](https://shoottheluck.github.io/CustomElements/ApplicationWindow)<br>
