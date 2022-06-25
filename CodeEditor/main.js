@@ -5,9 +5,8 @@ import {CodeEditor} from "./CodeEditor.js";
 
 var codeEditor = new CodeEditor();
 document.body.appendChild(codeEditor);
-codeEditor.setValue(`var t = "test";`);
 
-codeEditor.setValue(
+codeEditor.value =
 `var position = {x: 0, y: 0, z: 0};
 
 var test = "test";
@@ -20,7 +19,7 @@ function onEntry() {
 function doIt(what) {
     position.x += 0.1;
     print("position now", position);
-}`);
+}`;
 // codeEditor.markErrorAtLine(1);
 // codeEditor.markErrorAtLine(2);
 

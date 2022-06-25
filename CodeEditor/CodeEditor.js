@@ -51,15 +51,14 @@ template.innerHTML =
         background-color: var(--code-editor-background-color, inherit);
         position: relative;
         display: block;
-        line-height: 1.5;
+        line-height: 1.25;
         border-style: solid;
         border-color: var(--code-editor-border-color, grey);
         border-width: var(--code-editor-border-width, 1px);
-        -moz-tab-size: 4;
         tab-size: 4;
         font-family: var(--code-editor-font-family, "Roboto Mono", monospace);
         font-size: var(--code-editor-font-size, inherit);
-        caret-color: var(--code-editor-caret-color, black);
+        caret-color: var(--code-editor-caret-color, inherit);
     }
 
     :host * {
@@ -167,18 +166,18 @@ class CodeEditor extends HTMLElement {
     }
 
     connectedCallback() {
-        // dubious method here
+        // dubious method here to handle content written in the HTML
         // if (this.textContent !== "") {
-            // this.setValue(this.textContent);
+            // this.value = this.textContent;
             // this.textContent = "";
         // }
     }
 
-    getValue() {
+    get value() {
         return this.input.value;
     }
 
-    setValue(what) {
+    set value(what) {
         this.input.value = what;
         this.updateDisplay();
         this.syncScroll();
@@ -300,13 +299,13 @@ class CodeEditor extends HTMLElement {
         var value = this.input.value;
 
         //TODO: was this needed for something?
-        if (value[value.length - 1] === "\n") {
-            value += " ";
-        }
+        // if (value[value.length - 1] === "\n") {
+            // value += " ";
+        // }
 
         const formattedHTML = this.highlightCode(value);
 
-        if (this.errorLines.size  === 0) {
+        if (this.errorLines.size === 0) {
             this.display.innerHTML = formattedHTML;
         } else {
             const displayLines = formattedHTML.split("\n");
