@@ -50,9 +50,7 @@ template.innerHTML =
         color: var(--code-editor-color, inherit);
         background-color: var(--code-editor-background-color, inherit);
         position: relative;
-        display: inline-block;
-        width: 900px;
-        height: 600px;
+        display: block;
         line-height: 1.5;
         border-style: solid;
         border-color: var(--code-editor-border-color, grey);
