@@ -46,6 +46,7 @@ template.innerHTML =
         --title-bar-font-family: var(--application-window-title-bar-font-family, inherit);
         --title-bar-font-style: var(--application-window-title-bar-font-style, inherit);
         --title-bar-font-size: var(--application-window-title-bar-font-size, inherit);
+        --title-bar-height: var(--application-window-title-height, 2.1em);
 
         --color: var(--application-window-color, white);
         --background-color: var(--application-window-background-color, rgba(10, 10, 10, 1.0));
@@ -71,6 +72,8 @@ template.innerHTML =
         top: 30%;
         left: 35%;
         width: 400px;
+        min-height: calc(var(--title-bar-height) + var(--border-width));
+        min-width: 16em;
         transition: opacity 40ms linear;
         overflow: hidden;
         margin: 0;
@@ -88,8 +91,8 @@ template.innerHTML =
         border-bottom: solid 3px;
         border-color: inherit;
         flex-shrink: 0;
-        height: 32px;
-        line-height: 32px;
+        height: var(--title-bar-height);
+        line-height: var(--title-bar-height);
         width: 100%;
     }
 
