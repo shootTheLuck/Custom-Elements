@@ -11,6 +11,6 @@ Would love to receive any feedback, issues, or contributions!
 
 #### Custom HTML Elements:
 ApplicationWindow [demo](https://shoottheluck.github.io/CustomElements/ApplicationWindow)<br>
-CodeEditor [demo](https://shoottheluck.github.io/CustomElements/CodeEditor)<br>
+CodeArea [demo](https://shoottheluck.github.io/CustomElements/CodeArea)<br>
 Menus [demo](https://shoottheluck.github.io/CustomElements/Menus)<br>
 SpinBox [demo](https://shoottheluck.github.io/CustomElements/SpinBox)<br>
