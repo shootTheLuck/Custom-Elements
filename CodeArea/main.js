@@ -1,12 +1,12 @@
 
-import {CodeEditor} from "./CodeEditor.js";
+import {CodeArea} from "./CodeArea.js";
 
 // document.documentElement.setAttribute("window-theme", "dark");
 
-var codeEditor = new CodeEditor();
-document.body.appendChild(codeEditor);
+var codeArea = new CodeArea();
+document.body.appendChild(codeArea);
 
-codeEditor.value =
+codeArea.value =
 `var position = {x: 0, y: 0, z: 0};
 
 var test = "test";
@@ -29,8 +29,8 @@ function test(iterations = 1) {
 
     for (let i = 0; i < iterations; i++) {
         // codeEditor.toggleComment();
-        codeEditor.input.value += "x\n";
-        codeEditor.updateDisplay();
+        codeArea.input.value += "x\n";
+        codeArea.updateDisplay();
     }
 
     console.log("finish", performance.now() - start);

@@ -58,7 +58,7 @@ template.innerHTML =
         tab-size: 4;
         font-family: var(--code-editor-font-family, "Roboto Mono", monospace);
         font-size: var(--code-editor-font-size, inherit);
-        caret-color: var(--code-editor-caret-color, inherit);
+        caret-color: var(--code-editor-caret-color, black);
     }
 
     :host * {
@@ -127,7 +127,7 @@ template.innerHTML =
 
 `;
 
-class CodeEditor extends HTMLElement {
+class CodeArea extends HTMLElement {
 
     constructor(opts = {}) {
         super();
@@ -583,6 +583,6 @@ class CodeEditor extends HTMLElement {
 
 }
 
-customElements.define("code-editor", CodeEditor);
+customElements.define("code-area", CodeArea);
 
-export {CodeEditor};
+export {CodeArea};

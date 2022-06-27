@@ -5,10 +5,11 @@
     <title>Code Editor Element</title>
     <style>
 
-        [window-theme=dark] {
+        [window-theme=plain] {
+            --code-editor-color: gray;
             --code-editor-background-color: black;
-            --code-editor-color: white;
             --code-editor-caret-color: white;
+            --highlighter-number-color: yellow;
         }
 
         body {
@@ -20,21 +21,21 @@
             height: 100%;
         }
 
-        code-editor {
+        application-window {
+            background-color: white;
+        }
+
+        code-area {
+            border-width: 0;
             color: blue;
             background-color: white;
-            caret-color: black;
-            box-shadow: 10px 10px 5px #252525;
-            width: 900px;
-            height: 600px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
         }
 
     </style>
 </head>
 <body>
-    <script src="main.js" type="module"></script>
+
+    <script src="main2.js" type="module"></script>
+
 </body>
 </html>
