@@ -33,13 +33,13 @@ function makeElementDraggable(element, dragger) {
 }
 
 
-const template = document.createElement('template');
+const template = document.createElement("template");
 
 template.innerHTML =
 `<style>
     :host {
 
-        /*  theme overridable variables */
+        /* theme overridable variables */
 
         --title-bar-color: var(--application-window-title-bar-color, white);
         --title-bar-background-color: var(--application-window-title-bar-color, rgba(50, 50, 50, 1.0));
@@ -48,8 +48,8 @@ template.innerHTML =
         --title-bar-font-size: var(--application-window-title-bar-font-size, inherit);
         --title-bar-height: var(--application-window-title-height, 2.1em);
 
-        --color: var(--application-window-color, white);
-        --background-color: var(--application-window-background-color, rgba(10, 10, 10, 1.0));
+        --color: var(--application-window-color, inherit);
+        --background-color: var(--application-window-background-color, inherit);
         --font-family: var(--application-window-font-family, inherit);
         --font-style: var(--application-window-font-style, inherit);
         --font-size: var(--application-window-font-size, inherit);
