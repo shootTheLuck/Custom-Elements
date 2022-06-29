@@ -94,6 +94,7 @@ template.innerHTML =
         padding: 0.6em;
         width: calc(100% - 2em);
         font-family: inherit;
+        font-size: inherit;
     }
 
     .input {
