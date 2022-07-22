@@ -71,7 +71,6 @@ template.innerHTML =
         position: absolute;
         top: 30%;
         left: 35%;
-        width: 400px;
         min-height: calc(var(--title-bar-height) + var(--border-width));
         min-width: 16em;
         transition: opacity 40ms linear;
