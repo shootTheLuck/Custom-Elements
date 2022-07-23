@@ -18,3 +18,23 @@ document.body.appendChild(codeArea);
 codeArea.value = `var t = "test";`;
 
 ```
+
+## Built-in Functions
+
+CodeArea has a few built-in functions for editing code that can be called with the following keyboard shortcuts:
+
+1. DuplicateSelection. Selections of code or entire selected lines can be duplicated by pressing  <kbd>CTRL</kbd> <kbd>d</kbd>.
+2. ToggleComment. Selected lines can be commented or uncommented by pressing <kbd>CTRL</kbd> <kbd>e</kbd>.
+
+Keyboard shortcuts are exposed in the `keyboardShortcuts` property and can be reassigned at any time ie:
+
+```
+codeArea.keyboardShortcuts.duplicateSelection = "y";
+```
+
+## Contribute
+
+Contributions, issues, comments would be awesome!  Hit the issues button to get started. Thanks!
+
+
+
