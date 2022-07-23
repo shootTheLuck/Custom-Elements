@@ -9,7 +9,7 @@ const keywords =
 "print|new|if|else|do|while|switch|for|in|of|continue|break|return|typeof|function|var|const|let";
 
 const keywordNotQuotedRegex = new RegExp(`("[^"]+")|('[^']+')|\\b(` + keywords + `)(?=[^\\w])`, "g");
-const numberNotQuotedRegex = new RegExp(`("[^"]+")|('[^']+')|(0[xX][0-9a-fA-F]+)|\\b((\\d+)(\\.\\d+)?)`, "g");
+const numberNotQuotedRegex = new RegExp(`("[^"]+")|('[^']+')|(0[0-9a-fA-FXx]+)|\\b((\\d+)(\\.\\d+)?)`, "g");
 const singleQuotedRegex = new RegExp(`('[^']+')`, "g");
 const doubleQuotedRegex = new RegExp(`("[^"]+")`, "g");
 
