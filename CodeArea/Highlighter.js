@@ -3,12 +3,13 @@
 // https://stackoverflow.com/a/23667311
 // https://zserge.com/posts/js-editor/
 // https://www.aspsnippets.com/Articles/Regular-Expression-Regex-to-allow-both-decimals-as-well-as-integers-and-Regex-for-allowing-any-decimal-number.aspx
+// https://stackoverflow.com/questions/9221362/regular-expression-for-a-hexadecimal-number
 
 const keywords =
 "print|new|if|else|do|while|switch|for|in|of|continue|break|return|typeof|function|var|const|let";
 
 const keywordNotQuotedRegex = new RegExp(`("[^"]+")|('[^']+')|\\b(` + keywords + `)(?=[^\\w])`, "g");
-const numberNotQuotedRegex = new RegExp(`("[^"]+")|('[^']+')|\\b((\\d+)(\\.\\d+)?)`, "g");
+const numberNotQuotedRegex = new RegExp(`("[^"]+")|('[^']+')|(0[xX][0-9a-fA-F]+)|\\b((\\d+)(\\.\\d+)?)`, "g");
 const singleQuotedRegex = new RegExp(`('[^']+')`, "g");
 const doubleQuotedRegex = new RegExp(`("[^"]+")`, "g");
 
@@ -100,26 +101,26 @@ class Highlighter {
             return linePortions.join("");
         }
 
-        line = line.
+        line = line
 
-            replace(singleQuotedRegex, this._highlightSingleQuote(`$1`)).
-            replace(doubleQuotedRegex, this._highlightDoubleQuote(`$1`)).
+            .replace(singleQuotedRegex, this._highlightSingleQuote(`$1`))
+            .replace(doubleQuotedRegex, this._highlightDoubleQuote(`$1`))
 
-            replace(keywordNotQuotedRegex, (m, group1, group2) => {
+            .replace(keywordNotQuotedRegex, (m, group1, group2) => {
                 if (!group1 && !group2) {
                     return this._highlightKeyword(m);
                 } else {
                     return m;
                 }
-            }).
+            })
 
-            replace(numberNotQuotedRegex, (m, group1, group2) => {
+            .replace(numberNotQuotedRegex, (m, group1, group2) => {
                 if (!group1 && !group2) {
                     return this._highlightNumber(m);
                 } else {
                     return m;
                 }
-            })
+            });
 
         return line;
 
