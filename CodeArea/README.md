@@ -29,7 +29,7 @@ CodeArea has a few built-in functions for editing code that can be called with t
 Keyboard shortcuts are exposed in the `keyboardShortcuts` property and can be reassigned at any time ie:
 
 ```
-codeArea.keyboardShortcuts.duplicateSelection = "y";
+codeArea.keyboardShortcuts.toggleComment = "t";
 ```
 
 ## Contribute

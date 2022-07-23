@@ -159,6 +159,13 @@ class CodeArea extends HTMLElement {
 
         this.tabCharacter = "\t";
         // this.tabCharacter = "    ";
+        this.keyboardShortcuts = {
+            paste: "v",
+            undo: "z",
+            duplicateSelection: "d",
+            toggleComment: "e",
+        };
+
         this.commentSymbol = "// ";
         this.states = [];
         this.currentScroll = {scrollLeft: 0, scrollTop: 0};
@@ -537,12 +544,12 @@ class CodeArea extends HTMLElement {
                 case "s":
                     evt.preventDefault();
                     break;
-                case "e":
+                case this.keyboardShortcuts.toggleComment:
                     evt.preventDefault();
                     this.saveState();
                     this.toggleComment();
                     break;
-                case "d":
+                case this.keyboardShortcuts.duplicateSelection:
                     evt.preventDefault();
                     this.saveState();
                     this.duplicateSelection();
@@ -553,7 +560,7 @@ class CodeArea extends HTMLElement {
                 case "x":
                     this.saveState();
                     break;
-                case "z":
+                case this.keyboardShortcuts.undo:
                     evt.preventDefault();
                     this.restoreState();
                     break;
