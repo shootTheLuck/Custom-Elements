@@ -307,7 +307,6 @@ class SpinBox extends HTMLElement {
     }
 
     getValue() {
-        console.log(typeof this.input.value);
         let value = parseFloat(this.input.value);
         return value;
     }
