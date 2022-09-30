@@ -151,7 +151,7 @@ button:active {
         <i class="down-arrow"></i>
     </button>
 </div>
-`
+`;
 
 
 class SpinBox extends HTMLElement {
@@ -164,8 +164,8 @@ class SpinBox extends HTMLElement {
             decimals: 0,
             max: Infinity,
             min: -Infinity,
-            initialSpeed: 10,
-            highSpeed: 2,
+            initialSpeed: 200,
+            highSpeed: 20,
             increaseSpeedAfter: 4, //steps
             value: 0,
         };
@@ -208,21 +208,21 @@ class SpinBox extends HTMLElement {
         });
 
         const resetDynamics = () => {
-            this.timer = 0;
             this.numOfTimes = 0;
             this.currentSpeed = this.initialSpeed;
+            this.timer = performance.now() - this.currentSpeed;
         };
 
         const upButton = this.shadowRoot.querySelector(".up-button");
         upButton.addEventListener("mousedown", (evt) => {
             resetDynamics();
-            this.animation = requestAnimationFrame(this.stepValue.bind(this, this.step));
+            this.stepValue(this.step);
         });
 
         const downButton = this.shadowRoot.querySelector(".down-button");
         downButton.addEventListener("mousedown", (evt) => {
             resetDynamics();
-            this.animation = requestAnimationFrame(this.stepValue.bind(this, -this.step));
+            this.stepValue(-this.step);
         });
 
         [upButton, downButton].forEach((button) => {
@@ -290,22 +290,19 @@ class SpinBox extends HTMLElement {
     stepValue(stepAmount) {
         if (this.input.disabled) return;
 
-        if (this.timer > this.currentSpeed) {
-            this.timer = 0;
-        }
-
-        if (this.timer === 0) {
+        const now = performance.now();
+        if (now - this.timer > this.currentSpeed) {
             let value = this.getValue();
             value += stepAmount;
             this.changeValue(value);
             this.numOfTimes += 1;
+            this.timer = now;
         }
 
         if (this.numOfTimes > this.increaseSpeedAfter) {
             this.currentSpeed = Math.max(this.currentSpeed * 0.9, this.highSpeed);
         }
 
-        this.timer += 1;
         this.animation = requestAnimationFrame(() => this.stepValue(stepAmount));
     }
 
