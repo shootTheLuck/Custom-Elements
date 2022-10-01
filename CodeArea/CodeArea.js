@@ -306,10 +306,10 @@ class CodeArea extends HTMLElement {
 
         var value = this.input.value;
 
-        //TODO: was this needed for something?
-        // if (value[value.length - 1] === "\n") {
-            // value += " ";
-        // }
+        //prevents scroll from getting out of whack
+        if (value[value.length - 1] === "\n") {
+            value += " ";
+        }
 
         const formattedHTML = this.highlightCode(value);
 
