@@ -19,29 +19,6 @@ const nonPrintable = [ "Alt", "OS", "Shift", "NumLock", "Insert", "CapsLock", "E
 // ui.caretWidth set to 1
 // ui.caretBlinkTime set to 500
 
-
-// count the number of subStrings within a string
-// @author Vitim.us https://gist.github.com/victornpb/7736865
-function occurrences(string, subString, allowOverlapping) {
-
-    string += "";
-    subString += "";
-    if (subString.length <= 0) return (string.length + 1);
-
-    var n = 0,
-        pos = 0,
-        step = allowOverlapping ? 1 : subString.length;
-
-    while (true) {
-        pos = string.indexOf(subString, pos);
-        if (pos >= 0) {
-            ++n;
-            pos += step;
-        } else break;
-    }
-    return n;
-}
-
 const template = document.createElement("template");
 
 template.innerHTML =
@@ -144,13 +121,14 @@ class CodeArea extends HTMLElement {
         this.input = this.shadowRoot.querySelector(".input");
         this.display = this.shadowRoot.querySelector(".display");
 
-        this.input.addEventListener("keydown", (evt) => {
-            this.handleKeydown(evt);
-        });
-
         this.input.addEventListener("input", (evt) => {
             this.updateDisplay();
             this.syncScroll();
+        });
+
+        // listen for various key strokes
+        this.input.addEventListener("keydown", (evt) => {
+            this.handleKeydown(evt);
         });
 
         this.input.addEventListener("scroll", (evt) => {
@@ -255,7 +233,9 @@ class CodeArea extends HTMLElement {
 
     updateLineNumbers() {
 
-        const linesOfText = occurrences(this.input.value, "\n") + 1;
+        //https://stackoverflow.com/a/30411260
+        const linesOfText = this.input.value.match(/\n/g).length + 1;
+
         const lineNumbers = this.gutter.children.length;
         let difference = linesOfText - lineNumbers;
 
@@ -306,9 +286,14 @@ class CodeArea extends HTMLElement {
 
         var value = this.input.value;
 
-        //prevents scroll from getting out of whack
         if (value[value.length - 1] === "\n") {
+
+            // fix scroll behavior firefox and chrome
             value += " ";
+
+            // scroll to last line as it's entered in chrome
+            this.input.blur();
+            this.input.focus();
         }
 
         const formattedHTML = this.highlightCode(value);
