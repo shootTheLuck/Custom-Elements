@@ -69,18 +69,15 @@ template.innerHTML =
         font-size: var(--font-size);
         opacity: 1;
         position: absolute;
-        top: 30%;
+        top: 40%;
         left: 35%;
         min-height: calc(var(--title-bar-height) + var(--border-width));
         min-width: 16em;
         transition: opacity 40ms linear;
         overflow: hidden;
         margin: 0;
-        resize: both;
         white-space: nowrap;
         user-select: none;
-
-        display: none;
         flex-direction: column;
     }
 
@@ -168,9 +165,6 @@ template.innerHTML =
     <button class="close-button"></button>
 </div>
 
-<slot name="client-area" class="client-area">
-
-</slot>
 `;
 
 class ApplicationWindow extends HTMLElement {
@@ -180,9 +174,9 @@ class ApplicationWindow extends HTMLElement {
 
         const defaults = {
             title: "Application Window",
-            resize: "both", //"none", "vertical", "horizontal"
             draggable: true,
             closeable: true,
+            closed: false,
         };
 
         this.attachShadow({mode: "open"});
@@ -191,13 +185,15 @@ class ApplicationWindow extends HTMLElement {
         this.titleBar = this.shadowRoot.querySelector(".title-bar");
         this.titleDisplay = this.shadowRoot.querySelector(".title");
         this.closeButton = this.shadowRoot.querySelector(".close-button");
-        this.clientArea = this.shadowRoot.querySelector(".client-area");
+        this.clientArea = document.createElement("slot");
+        this.clientArea.className = "client-area";
+        this.shadowRoot.appendChild(this.clientArea);
 
         this.setTitle(opts.title || defaults.title);
-        this.resize = (opts.resize !== undefined)? opts.resize : defaults.resize;
 
         const draggable = (opts.draggable !== undefined)? opts.draggable : defaults.draggable;
         const closeable = (opts.closeable !== undefined)? opts.closeable : defaults.closeable;
+        const closed = (opts.closed !== undefined)? opts.closed : defaults.closed;
 
         if (draggable) {
             makeElementDraggable(this, this.titleBar);
@@ -205,22 +201,16 @@ class ApplicationWindow extends HTMLElement {
         if (closeable) {
             this.closeButton.addEventListener("click", this.close.bind(this));
         }
+        if (closed) {
+            this.style.display = "none";
+        }
 
         this.openEvent = new Event("open");
         this.closedEvent = new Event("closed");
-        this.closed = true;
-
-        // override appendChild
-        // give element a named slot so it can be styled by global css
-        this.appendChild = function(element) {
-            element.setAttribute("slot", "client-area");
-            this.append(element);
-            return element;
-        };
     }
 
     connectedCallback() {
-        this.style.resize = this.resize;
+
     }
 
     setTitle(text) {
@@ -231,7 +221,7 @@ class ApplicationWindow extends HTMLElement {
         // package in an element with a named slot
         // so it can be styled by global css
         const div = document.createElement("div");
-        div.setAttribute("slot", "client-area");
+        // div.setAttribute("slot", "client-area");
         div.insertAdjacentHTML("beforeend", string);
         this.append(div);
     }
@@ -247,27 +237,23 @@ class ApplicationWindow extends HTMLElement {
     }
 
     close() {
-        if (!this.closed) {
-            this.closed = true;
-            this.style.opacity = 0;
-            this.addEventListener("transitionend", () => {
-                if (this.closed) {
-                    this.style.display = "none";
-                }
-            });
-            this.dispatchEvent(this.closedEvent);
-        }
+        this.closed = true;
+        this.style.opacity = 0;
+        this.addEventListener("transitionend", () => {
+            if (this.closed) {
+                this.style.display = "none";
+            }
+        });
+        this.dispatchEvent(this.closedEvent);
     }
 
     open() {
-        if (this.closed) {
-            this.closed = false;
-            this.style.opacity = 1.0;
-            this.style.display = "flex";
-            /* re-append to put this higher in the stacking context */
-            this.parentElement.appendChild(this);
-            this.dispatchEvent(this.openEvent);
-        }
+        this.closed = false;
+        this.style.opacity = 1.0;
+        this.style.display = "flex";
+        /* re-append to put this higher in the stacking context */
+        this.parentElement.appendChild(this);
+        this.dispatchEvent(this.openEvent);
     }
 
     maximize() {

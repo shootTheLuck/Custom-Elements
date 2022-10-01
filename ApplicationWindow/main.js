@@ -24,12 +24,11 @@ const markup = `
 `;
 
 appWindow.addMarkup(markup);
+appWindow.style.top = "15%";
 appWindow.addEventListener("closed", (evt) => {
     console.log("app closed");
 });
-appWindow.style.top = "20%";
 document.body.appendChild(appWindow);
-appWindow.open();
 
 var showHideAppWindowBtn = document.getElementById("showHideAppWindowBtn");
 showHideAppWindowBtn.onclick = function() {
@@ -44,25 +43,4 @@ var button = document.createElement("button");
 button.innerHTML = "WOWOWO";
 appWindow.appendChild(button);
 
-var template = document.querySelector("#template");
-let content = template.content;
-document.body.appendChild(content);
-
-var templateModal = document.getElementById("appWindow-from-template");
-templateModal.style.top = "50%";
-templateModal.addMarkup(markup);
-templateModal.open();
-
-var button = document.createElement("button");
-button.innerHTML = "WOWOWO";
-templateModal.appendChild(button);
-
-var showHideTemplateAppWindowButton = document.getElementById("showHideTemplateAppWindowButton");
-showHideTemplateAppWindowButton.onclick = function() {
-    if (templateModal.closed) {
-        templateModal.open();
-    } else {
-        templateModal.close();
-    }
-};
 

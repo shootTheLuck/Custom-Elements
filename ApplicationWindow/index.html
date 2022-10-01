@@ -15,6 +15,10 @@
             --application-window-border-color: #151515;
             --application-window-border-radius: 0;
         }
+        application-window {
+            resize: both;
+        }
+
         button {
             color: blue;
         }
@@ -33,24 +37,8 @@
     <br>
     <br>
     <br>
-    <br>
     <div id="heading">Custom Application Window Element.</div>
     <button id="showHideAppWindowBtn">Show/Hide Application Window</button>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div>Application Window from templated HTML:</div>
-    <template id="template">
-        <application-window id="appWindow-from-template"></application-window>
-    </template>
-    <button id="showHideTemplateAppWindowButton">Show/Hide Template Application Window</button>
 
     <script src="main.js" type="module"></script>
 </body>
