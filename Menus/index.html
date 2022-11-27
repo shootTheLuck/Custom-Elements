@@ -9,10 +9,7 @@
         width: 800px;
         height: 600px;
         border: 2px solid black;
-        position: relative;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, 0);
+        position: absolute;
     }
 
     #square {
@@ -20,6 +17,9 @@
         height: 100px;
         border: 2px solid black;
         position: relative;
+    }
+
+    .centered {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -32,17 +32,10 @@
     </style>
 </head>
 <body>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div>
-        <div id="rectangle">
-            <div id="instructions">Right-click anywhere inside me for context menu..</div>
-            <div id="square" style="background: red"></div>
-        </div>
+    <div id="rectangle" class="centered">
+        <div id="instructions">Right-click anywhere inside me for context menu..</div>
+        <div id="square" class="centered" style="background: red"></div>
     </div>
-    <br>
     <script src="main.js" type="module"></script>
 
 </body>
