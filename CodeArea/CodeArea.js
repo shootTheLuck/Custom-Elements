@@ -234,7 +234,8 @@ class CodeArea extends HTMLElement {
     updateLineNumbers() {
 
         //https://stackoverflow.com/a/30411260
-        const linesOfText = this.input.value.match(/\n/g).length + 1;
+        //https://gist.github.com/lsauer/2757164
+        const linesOfText = (this.input.value.match(/\n/g) || []).length + 1;
 
         const lineNumbers = this.gutter.children.length;
         let difference = linesOfText - lineNumbers;
