@@ -159,6 +159,10 @@ class CodeArea extends HTMLElement {
         // }
     }
 
+    get children() {
+        return [this.input, this.gutter, this.display];
+    }
+
     get value() {
         return this.input.value;
     }

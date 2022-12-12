@@ -2,9 +2,19 @@
 //makeElementDraggable adapted from https://www.w3schools.com/howto/howto_js_draggable.asp
 
 function makeElementDraggable(element, dragger) {
-    var initialOffsetLeft = 0;
-    var initialOffsetTop = 0;
+    let initialOffsetLeft = 0;
+    let initialOffsetTop = 0;
+    const scrollMap = new Map();
     dragger.addEventListener("mousedown", startDrag);
+
+    function traverseChildren(element, callback) {
+        callback(element);
+        if (element.children) {
+            for (const child of element.children) {
+                traverseChildren(child, callback);
+            }
+        }
+    }
 
     function startDrag(evt) {
         if (evt.button === 0) {
@@ -12,11 +22,22 @@ function makeElementDraggable(element, dragger) {
             initialOffsetTop = evt.clientY - element.offsetTop;
             document.addEventListener("mouseup", endDrag, true);
             document.addEventListener("mousemove", drag, true);
-            /* re-append to put this higher in the stacking context */
-            /* delay to allow other elements to lose focus */
+
+            /* re-append to put this higher in the stacking context
+             * delay to allow other elements to lose focus
+             * preserve scroll for child elements
+             */
+
             setTimeout(function() {
+                traverseChildren(element, (el) => {
+                    scrollMap.set(el, el.scrollTop);
+                });
                 element.parentElement.appendChild(element);
+                traverseChildren(element, (el) => {
+                    el.scrollTop = scrollMap.get(el);
+                });
             }, 1);
+
         }
     }
 
