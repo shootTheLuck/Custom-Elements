@@ -90,8 +90,13 @@ template.innerHTML =
         font-size: var(--font-size);
         opacity: 1;
         position: absolute;
-        top: 40%;
-        left: 35%;
+
+        /* set initial width and height */
+        width: 400px;
+        height: 400px;
+        top: calc(50% - 200px);
+        left: calc(50% - 200px);
+
         min-height: calc(var(--title-bar-height) + var(--border-width));
         min-width: 16em;
         transition: opacity 40ms linear;
@@ -127,7 +132,7 @@ template.innerHTML =
         font-family: inherit;
         font-style: inherit;
         font-size: inherit;
-        overflow: auto;
+        overflow: hidden;
         padding: 5px;
         height: 100%;
         display: block;
