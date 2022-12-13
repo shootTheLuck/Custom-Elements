@@ -576,7 +576,6 @@ class CodeArea extends HTMLElement {
             this.addNewLine();
         }
 
-        return;
     }
 
 }
