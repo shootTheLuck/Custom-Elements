@@ -128,12 +128,11 @@ template.innerHTML =
 
     .client-area {
         color: inherit;
-        background-color: inherit;
+        background-color: red;
         font-family: inherit;
         font-style: inherit;
         font-size: inherit;
         overflow: hidden;
-        padding: 5px;
         height: 100%;
         display: block;
         position: relative;

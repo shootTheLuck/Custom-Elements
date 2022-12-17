@@ -146,7 +146,6 @@ class CodeArea extends HTMLElement {
 
         this.commentSymbol = "// ";
         this.states = [];
-        this.currentScroll = {scrollLeft: 0, scrollTop: 0};
         this.errorLines = new Set();
 
     }
@@ -184,8 +183,10 @@ class CodeArea extends HTMLElement {
     }
 
     clearAllErrors() {
-        this.errorLines.clear();
-        this.updateDisplay();
+        if (this.errorLines.size > 0) {
+            this.errorLines.clear();
+            this.updateDisplay();
+        }
     }
 
     getSelection(start = this.input.selectionStart, end = this.input.selectionEnd) {
@@ -423,8 +424,8 @@ class CodeArea extends HTMLElement {
     }
 
     duplicateSelection() {
-        var needNewLine = false;
-        var selection = this.getSelection();
+        let needNewLine = false;
+        let selection = this.getSelection();
         const selectionStart = selection.start;
         const selectionEnd = selection.end;
         const lines = this.getSelectionLines();
@@ -452,27 +453,26 @@ class CodeArea extends HTMLElement {
     }
 
     indent() {
-        var selection = this.getSelection();
-
-        var start = selection.start;
-        var end = selection.end;
-        var selectionEnd = end;
+        const selection = this.getSelection();
+        const start = selection.start;
+        const end = selection.end;
 
         const existing = this.input.value;
         const preceeding = existing.substring(0, start);
         const remaining = existing.substring(end);
         const tab = this.tabCharacter;
 
-        let arr = existing.substring(start, end).split("\n");
+        const lines = existing.substring(start, end).split("\n");
 
-        if (arr.length > 1) {
-            for (let i = 0; i < arr.length; i++) {
-                const line = arr[i];
+        if (lines.length > 1) {
+            let selectionEnd = end;
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
                 if (line === "") continue;
-                arr[i] = tab + line;
+                lines[i] = tab + line;
                 selectionEnd += tab.length;
             }
-            const indented = arr.join("\n");
+            const indented = lines.join("\n");
             this.input.value = preceeding + indented + remaining;
             this.setSelection(start, selectionEnd);
         } else {
@@ -483,28 +483,27 @@ class CodeArea extends HTMLElement {
     }
 
     unIndent() {
-        var selection = this.getSelection();
-
-        var start = selection.start;
-        var end = selection.end;
-        var selectionEnd = end;
+        const selection = this.getSelection();
+        const start = selection.start;
+        const end = selection.end;
 
         const existing = this.input.value;
         const preceeding = existing.substring(0, start);
         const remaining = existing.substring(end);
         const tab = this.tabCharacter;
 
-        let arr = existing.substring(start, end).split("\n");
-        if (arr.length > 1) {
-            for (let i = 0; i < arr.length; i++) {
-                const line = arr[i];
+        const lines = existing.substring(start, end).split("\n");
+        if (lines.length > 1) {
+            let selectionEnd = end;
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
                 if (line === "") continue;
                 if (line.trimStart().length < line.length) {
-                    arr[i] = line.slice(tab.length);
+                    lines[i] = line.slice(tab.length);
                     selectionEnd -= tab.length;
                 }
             }
-            const unIndented = arr.join("\n");
+            const unIndented = lines.join("\n");
             this.input.value = preceeding + unIndented + remaining;
             this.setSelection(start, selectionEnd);
         } else {

@@ -9,6 +9,7 @@ var appWindow = new ApplicationWindow({title: "Application Window"});
 // document.body.setAttribute("window-theme", "plain");
 
 const markup = `
+<div style="margin: 15px">
 <label for="example-input">Example Input</label>
 <input id="example-input" type="text">
 <div id="transform-area" class="transform-area">
@@ -20,6 +21,7 @@ const markup = `
     <div id="scale-vector" class="vector-area">
         <label class="vector-area-label">Scale</label>
     </div>
+</div>
 </div>
 `;
 
