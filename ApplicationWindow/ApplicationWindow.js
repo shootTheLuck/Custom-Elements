@@ -229,6 +229,12 @@ class ApplicationWindow extends HTMLElement {
                 evt.stopPropagation();
             });
             this.closeButton.addEventListener("click", this.close.bind(this));
+
+            this.addEventListener("transitionend", () => {
+                if (this.isClosed) {
+                    this.style.display = "none";
+                }
+            });
         }
         if (closed) {
             this.isOpen = false;
@@ -274,11 +280,6 @@ class ApplicationWindow extends HTMLElement {
         this.isOpen = false;
         this.isClosed = true;
         this.style.opacity = 0;
-        this.addEventListener("transitionend", () => {
-            if (this.isClosed) {
-                this.style.display = "none";
-            }
-        });
         this.dispatchEvent(this.closeEvent);
     }
 
