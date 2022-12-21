@@ -224,6 +224,10 @@ class ApplicationWindow extends HTMLElement {
             makeElementDraggable(this, this.titleBar);
         }
         if (closeable) {
+            /* don't drag with closeButton */
+            this.closeButton.addEventListener("mousedown", (evt) => {
+                evt.stopPropagation();
+            });
             this.closeButton.addEventListener("click", this.close.bind(this));
         }
         if (closed) {
