@@ -218,7 +218,7 @@ class ApplicationWindow extends HTMLElement {
 
         const draggable = (opts.draggable !== undefined)? opts.draggable : defaults.draggable;
         const closeable = (opts.closeable !== undefined)? opts.closeable : defaults.closeable;
-        const closed = (opts.closed !== undefined)? opts.closed : defaults.closed;
+        const closed = (opts.isClosed !== undefined)? opts.isClosed : defaults.isClosed;
 
         if (draggable) {
             makeElementDraggable(this, this.titleBar);
@@ -227,11 +227,16 @@ class ApplicationWindow extends HTMLElement {
             this.closeButton.addEventListener("click", this.close.bind(this));
         }
         if (closed) {
+            this.isOpen = false;
+            this.isClosed = true;
             this.style.display = "none";
+        } else {
+            this.isOpen = true;
+            this.isClosed = false;
         }
 
         this.openEvent = new Event("open");
-        this.closedEvent = new Event("closed");
+        this.closeEvent = new Event("close");
     }
 
     connectedCallback() {
@@ -262,18 +267,20 @@ class ApplicationWindow extends HTMLElement {
     }
 
     close() {
-        this.closed = true;
+        this.isOpen = false;
+        this.isClosed = true;
         this.style.opacity = 0;
         this.addEventListener("transitionend", () => {
             if (this.closed) {
                 this.style.display = "none";
             }
         });
-        this.dispatchEvent(this.closedEvent);
+        this.dispatchEvent(this.closeEvent);
     }
 
     open() {
-        this.closed = false;
+        this.isOpen = true;
+        this.isClosed = false;
         this.style.opacity = 1.0;
         this.style.display = "flex";
         /* re-append to put this higher in the stacking context */

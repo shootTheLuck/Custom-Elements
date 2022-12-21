@@ -27,14 +27,14 @@ const markup = `
 
 appWindow.addMarkup(markup);
 appWindow.style.top = "15%";
-appWindow.addEventListener("closed", (evt) => {
-    console.log("app closed");
+appWindow.addEventListener("close", (evt) => {
+    console.log("appWindow closed");
 });
 document.body.appendChild(appWindow);
 
 var showHideAppWindowBtn = document.getElementById("showHideAppWindowBtn");
 showHideAppWindowBtn.onclick = function() {
-    if (appWindow.closed) {
+    if (appWindow.isClosed) {
         appWindow.open();
     } else {
         appWindow.close();
