@@ -19,7 +19,8 @@ function onEntry() {
 function doIt(what) {
     position.x += 0.1;
     print("position now", position);
-}`;
+}
+`;
 // codeEditor.markErrorAtLine(1);
 // codeEditor.markErrorAtLine(2);
 

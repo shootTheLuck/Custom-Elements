@@ -290,16 +290,36 @@ class CodeArea extends HTMLElement {
 
     updateDisplay() {
 
-        var value = this.input.value;
+        // var value = this.input.value;
 
+        // if (value[value.length - 1] === "\n") {
+
+            // //fix scroll behavior firefox and chrome
+            // value += " ";
+
+            // //scroll to last line as it's entered in chrome
+            // //and re-focus if needed
+            // let focused = false;
+            // if (document.activeElement === this) {
+                // focused = true;
+            // }
+
+            // this.input.blur();
+            // if (focused) {
+                // this.input.focus();
+            // }
+        // }
+
+        // fix scroll behavior firefox and chrome
+        // scroll to last line as it's entered in chrome
+        // and re-focus if needed
+        let value = this.input.value;
         if (value[value.length - 1] === "\n") {
-
-            // fix scroll behavior firefox and chrome
             value += " ";
-
-            // scroll to last line as it's entered in chrome
-            this.input.blur();
-            this.input.focus();
+            if (document.activeElement === this) {
+                this.input.blur();
+                this.input.focus();
+            }
         }
 
         const formattedHTML = this.highlightCode(value);
