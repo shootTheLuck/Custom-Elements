@@ -275,7 +275,7 @@ class ApplicationWindow extends HTMLElement {
         this.isClosed = true;
         this.style.opacity = 0;
         this.addEventListener("transitionend", () => {
-            if (this.closed) {
+            if (this.isClosed) {
                 this.style.display = "none";
             }
         });
