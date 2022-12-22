@@ -42,7 +42,8 @@ template.innerHTML =
 class DropdownMenu extends BaseMenu {
 
     constructor(name, menuItems = []) {
-        super(name, menuItems);
+        super(menuItems);
+        this.name = name;
         // this.selectionEvent = new Event("selection");
 
         // this.attachShadow({mode: "open"});

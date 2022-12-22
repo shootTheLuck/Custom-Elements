@@ -59,7 +59,7 @@ menuBar.addDropdownMenu(aboutMenu);
 var rectangleElement = document.getElementById("rectangle");
 var squareElement = document.getElementById("square");
 
-let contextMenu = new ContextMenu("Edit", ["Copy", "Paste"]);
+let contextMenu = new ContextMenu(["Copy", "Paste"]);
 contextMenu.autoDisplay = false;
 rectangleElement.appendChild(contextMenu);
 

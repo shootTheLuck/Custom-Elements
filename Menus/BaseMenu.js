@@ -9,14 +9,14 @@ template.innerHTML =`
 
 class BaseMenu extends HTMLElement {
 
-    constructor(name, menuItems = []) {
+    constructor(menuItems = []) {
         super();
         this.selectionEvent = new Event("selection");
 
         this.attachShadow({mode: "open"});
         this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-        this.name = name;
+        // this.name = name;
         this.menuItems = this.shadowRoot.querySelector(".items");
         for (let i = 0; i < menuItems.length; i++) {
             this.addMenuItem(menuItems[i]);

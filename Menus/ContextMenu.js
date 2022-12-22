@@ -40,8 +40,8 @@ template.innerHTML =
 `;
 class ContextMenu extends BaseMenu {
 
-    constructor(name, menuItems = []) {
-        super(name, menuItems);
+    constructor(menuItems = []) {
+        super(menuItems);
         this.shadowRoot.appendChild(template.content.cloneNode(true));
 
         this.autoDisplay = true;
@@ -53,10 +53,11 @@ class ContextMenu extends BaseMenu {
 
     connectedCallback() {
         super.connectedCallback();
-        this.style.position = "absolute";
-        this.style.padding = "0";
+        // this.style.position = "absolute";
+        // this.style.padding = "0";
 
         this.parentElement.addEventListener("contextmenu", (evt) => {
+            evt.preventDefault();
             if (this.autoDisplay) {
                 this.open(evt);
             }
@@ -72,8 +73,8 @@ class ContextMenu extends BaseMenu {
         super.open();
         this.tabIndex = 0;
 
-        evt.preventDefault();
-        evt.stopPropagation();
+        // evt.preventDefault();
+        // evt.stopPropagation();
         let x = evt.clientX;
         let y = evt.clientY;
 
