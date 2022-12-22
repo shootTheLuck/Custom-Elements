@@ -201,7 +201,7 @@ class ApplicationWindow extends HTMLElement {
             title: "Application Window",
             draggable: true,
             closeable: true,
-            closed: false,
+            isClosed: false,
         };
 
         this.attachShadow({mode: "open"});
