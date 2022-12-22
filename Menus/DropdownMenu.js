@@ -8,8 +8,6 @@ template.innerHTML =
 `<style>
 
     :host  {
-        -webkit-user-select: none;
-        -ms-user-select: none;
         user-select: none;
         position: fixed;
         border-style: solid;
