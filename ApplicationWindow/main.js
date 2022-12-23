@@ -34,10 +34,10 @@ document.body.appendChild(appWindow);
 
 var showHideAppWindowBtn = document.getElementById("showHideAppWindowBtn");
 showHideAppWindowBtn.onclick = function() {
-    if (appWindow.isClosed) {
-        appWindow.open();
-    } else {
+    if (appWindow.isOpen) {
         appWindow.close();
+    } else {
+        appWindow.open();
     }
 };
 

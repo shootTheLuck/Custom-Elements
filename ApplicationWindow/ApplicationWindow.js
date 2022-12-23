@@ -150,8 +150,7 @@ template.innerHTML =
         transform: translate(-30px,0);
     }
 
-    .close-button:hover,
-    .close-button:focus {
+    .close-button:hover {
         border: 2px solid grey;
         background-color: rgb(180, 180, 180);
         /*
@@ -159,7 +158,7 @@ template.innerHTML =
         */
     }
 
-    .close-button:active {
+    .close-button:focus {
         background-color: rgb(120,120,120);
     }
 
@@ -201,7 +200,7 @@ class ApplicationWindow extends HTMLElement {
             title: "Application Window",
             draggable: true,
             closeable: true,
-            isClosed: false,
+            isOpen: true,
         };
 
         this.attachShadow({mode: "open"});
@@ -218,7 +217,7 @@ class ApplicationWindow extends HTMLElement {
 
         const draggable = (opts.draggable !== undefined)? opts.draggable : defaults.draggable;
         const closeable = (opts.closeable !== undefined)? opts.closeable : defaults.closeable;
-        const closed = (opts.isClosed !== undefined)? opts.isClosed : defaults.isClosed;
+        const open = (opts.isOpen !== undefined)? opts.isOpen : defaults.isOpen;
 
         if (draggable) {
             makeElementDraggable(this, this.titleBar);
@@ -228,21 +227,22 @@ class ApplicationWindow extends HTMLElement {
             this.closeButton.addEventListener("mousedown", (evt) => {
                 evt.stopPropagation();
             });
+            this.closeButton.addEventListener("mouseleave", (evt) => {
+                this.closeButton.blur();
+            });
             this.closeButton.addEventListener("click", this.close.bind(this));
 
             this.addEventListener("transitionend", () => {
-                if (this.isClosed) {
+                if (!this.isOpen) {
                     this.style.display = "none";
                 }
             });
         }
-        if (closed) {
-            this.isOpen = false;
-            this.isClosed = true;
-            this.style.display = "none";
-        } else {
+        if (open) {
             this.isOpen = true;
-            this.isClosed = false;
+        } else {
+            this.isOpen = false;
+            this.style.display = "none";
         }
 
         this.openEvent = new Event("open");
@@ -278,14 +278,12 @@ class ApplicationWindow extends HTMLElement {
 
     close() {
         this.isOpen = false;
-        this.isClosed = true;
         this.style.opacity = 0;
         this.dispatchEvent(this.closeEvent);
     }
 
     open() {
         this.isOpen = true;
-        this.isClosed = false;
         this.style.opacity = 1.0;
         this.style.display = "flex";
         /* re-append to put this higher in the stacking context */
