@@ -40,7 +40,6 @@ template.innerHTML =
 }
 
 input {
-
     border-color: inherit;
     border-style: solid;
     border-width: 0.1em;
@@ -116,9 +115,9 @@ button:active {
     border-bottom-right-radius: inherit;
 }
 
-.up-arrow, .down-arrow {
-
-    /* "border" makes the arrow using same color as border color */
+/* make arrows using same color as border */
+.up-arrow,
+.down-arrow {
     border-color: inherit;
     border-style: solid;
     border-width: 0 0.125em 0.125em 0;
@@ -262,7 +261,7 @@ class SpinBox extends HTMLElement {
     }
 
     handleMouseWheel(evt) {
-        if (document.activeElement === this.input) {
+        if (document.activeElement === this) {
             let direction = (evt.deltaY < 0)? 1 : -1;
             let value = this.getValue();
             this.changeValue(value + this.step * direction);
