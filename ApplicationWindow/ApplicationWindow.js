@@ -63,11 +63,12 @@ template.innerHTML =
         /* theme overridable variables */
 
         --title-bar-color: var(--application-window-title-bar-color, white);
-        --title-bar-background-color: var(--application-window-title-bar-color, rgba(50, 50, 50, 1.0));
+        --title-bar-background-color: var(--application-window-title-bar-background-color, rgba(50, 50, 50, 1.0));
         --title-bar-font-family: var(--application-window-title-bar-font-family, inherit);
         --title-bar-font-style: var(--application-window-title-bar-font-style, inherit);
         --title-bar-font-size: var(--application-window-title-bar-font-size, inherit);
-        --title-bar-height: var(--application-window-title-height, 2.1em);
+        --title-bar-height: var(--application-window-title-bar-height, 1.75em);
+        --close-button-color: var(--application-window-close-button-color, black);
 
         --color: var(--application-window-color, inherit);
         --background-color: var(--application-window-background-color, inherit);
@@ -115,15 +116,38 @@ template.innerHTML =
         flex-shrink: 0;
         height: var(--title-bar-height);
         line-height: var(--title-bar-height);
-        width: 100%;
+        position: relative;
     }
 
     .title {
         user-select: none;
+        font-size: var(--title-bar-font-size);
         position: absolute;
         left: 50%;
         transform: translate(-50%, 0%);
         vertical-align: middle;
+    }
+
+    .close-button {
+        background-color: rgba(180, 180, 180, 0);
+        border: 2px solid rgba(180, 180, 180, 0);
+        font-size: calc(2px + var(--title-bar-height) * 0.5);
+        font-weight: 900;
+        line-height: 0.9em;
+        color: var(--close-button-color);
+        padding: 0;
+        margin: calc(var(--title-bar-height) * 0.15);
+        float: right;
+        vertical-align: middle;
+    }
+
+    .close-button:hover {
+        border: 2px solid grey;
+        background-color: rgb(180, 180, 180);
+    }
+
+    .close-button:focus {
+        background-color: rgb(120,120,120);
     }
 
     .client-area {
@@ -138,55 +162,11 @@ template.innerHTML =
         position: relative;
     }
 
-    .close-button {
-        background-color: rgba(180, 180, 180, 0);
-        border: 2px solid rgba(180, 180, 180, 0);
-        margin: 3px;
-        height: 22px;
-        width: 22px;
-        padding: 0;
-        position: absolute;
-        left : 100%;
-        transform: translate(-30px,0);
-    }
-
-    .close-button:hover {
-        border: 2px solid grey;
-        background-color: rgb(180, 180, 180);
-        /*
-        cursor: pointer;
-        */
-    }
-
-    .close-button:focus {
-        background-color: rgb(120,120,120);
-    }
-
-    /* https://stackoverflow.com/questions/18920542/draw-an-x-in-css*/
-
-    .close-button:before,
-    .close-button:after{
-        content: '';
-        position: absolute;
-        width: 12px;
-        height: 2px;
-        /* background-color will be color of the x*/
-        background-color: black;
-    }
-
-    .close-button:before{
-        transform: translate(1px, -1px) rotate(45deg) ;
-        left: 2px;
-    }
-    .close-button:after{
-        transform: translate(-1px, -1px) rotate(-45deg) ;
-        right: 2px;
-    }
 </style>
 
 <div class="title-bar">
     <span class="title"></span>
-    <button class="close-button"></button>
+    <button class="close-button">&#x2715</button>
 </div>
 
 `;
@@ -213,7 +193,7 @@ class ApplicationWindow extends HTMLElement {
         this.clientArea.className = "client-area";
         this.shadowRoot.appendChild(this.clientArea);
 
-        this.setTitle(opts.title || defaults.title);
+        this.title = ((opts.title !== undefined)? opts.title : defaults.title);
 
         const draggable = (opts.draggable !== undefined)? opts.draggable : defaults.draggable;
         const closeable = (opts.closeable !== undefined)? opts.closeable : defaults.closeable;
@@ -253,8 +233,12 @@ class ApplicationWindow extends HTMLElement {
 
     }
 
-    setTitle(text) {
+    set title(text) {
         this.titleDisplay.textContent = text;
+    }
+
+    get title() {
+        return;
     }
 
     addMarkup(string) {
