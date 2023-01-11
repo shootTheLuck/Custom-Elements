@@ -214,14 +214,18 @@ class SpinBox extends HTMLElement {
 
         const upButton = this.shadowRoot.querySelector(".up-button");
         upButton.addEventListener("mousedown", (evt) => {
-            resetDynamics();
-            this.stepValue(this.step);
+            if (evt.button === 0) {
+                resetDynamics();
+                this.stepValue(this.step);
+            }
         });
 
         const downButton = this.shadowRoot.querySelector(".down-button");
         downButton.addEventListener("mousedown", (evt) => {
-            resetDynamics();
-            this.stepValue(-this.step);
+            if (evt.button === 0) {
+                resetDynamics();
+                this.stepValue(-this.step);
+            }
         });
 
         [upButton, downButton].forEach((button) => {
