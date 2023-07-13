@@ -238,7 +238,7 @@ class ApplicationWindow extends HTMLElement {
     }
 
     get title() {
-        return;
+        return this.titleDisplay.textContent;
     }
 
     addMarkup(string) {
