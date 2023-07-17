@@ -75,7 +75,7 @@ template.innerHTML =
     }
 
     .input {
-        z-index: 1;
+        /* z-index: 1 */;
         color: transparent;
         caret-color: inherit;
         background: transparent;
@@ -101,7 +101,6 @@ template.innerHTML =
 
 <div class="gutter"></div>
 <div spellcheck="false" class="display"></div>
-<textarea spellcheck="false" class="input"></textarea>
 
 `;
 
@@ -117,8 +116,14 @@ class CodeArea extends HTMLElement {
         const highlighterStyle = this.highlighter.getStyleTemplate();
         this.shadowRoot.appendChild(highlighterStyle.content.cloneNode(true));
 
+        /* append input last instead of using zIndex */
+        this.input = document.createElement("textarea");
+        this.input.className = "input";
+        this.input.setAttribute("spellcheck", false);
+        this.shadowRoot.appendChild(this.input);
+
         this.gutter = this.shadowRoot.querySelector(".gutter");
-        this.input = this.shadowRoot.querySelector(".input");
+        // this.input = this.shadowRoot.querySelector(".input");
         this.display = this.shadowRoot.querySelector(".display");
 
         this.input.addEventListener("input", (evt) => {
