@@ -171,6 +171,8 @@ template.innerHTML =
 
 `;
 
+let topMostWindow;
+
 class ApplicationWindow extends HTMLElement {
 
     constructor(opts = {}) {
@@ -224,6 +226,13 @@ class ApplicationWindow extends HTMLElement {
             this.isOpen = false;
             this.style.display = "none";
         }
+
+        this.addEventListener("mousedown", (evt) => {
+            if (topMostWindow !== this) {
+                this.open();
+                topMostWindow = this;
+            }
+        });
 
         this.openEvent = new Event("open");
         this.closeEvent = new Event("close");

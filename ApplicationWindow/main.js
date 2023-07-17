@@ -17,6 +17,10 @@ const markup = `
     </p>
     <label for="example-input">Example Input</label>
     <input id="example-input" type="text">
+    <br>
+    <br>
+    <label for="example-textarea">Example Text Area</label>
+    <textarea spellcheck="false" id="example-textarea"></textarea>
 </div>
 `;
 
