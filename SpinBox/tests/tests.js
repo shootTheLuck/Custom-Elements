@@ -24,12 +24,6 @@ QUnit.module("SpinBox", function(hooks) {
         assert.equal(this.spinBox.getValue(), 0, "expect set and get 0");
         this.spinBox.setValue(1);
         assert.equal(this.spinBox.getValue(), 1, "expect set and get 1");
-        this.spinBox.changeValue(-1);
-        assert.equal(this.spinBox.getValue(), -1, "expect change and get -1");
-        this.spinBox.changeValue(0);
-        assert.equal(this.spinBox.getValue(), 0, "expect change and get 0");
-        this.spinBox.changeValue(1);
-        assert.equal(this.spinBox.getValue(), 1, "expect change and get 1");
     });
 
     QUnit.test("accepts non-numeric value with setValue() and displays as NaN", function(assert) {
@@ -37,13 +31,6 @@ QUnit.module("SpinBox", function(hooks) {
         let value = this.spinBox.getValue();
         assert.equal(isNaN(value), true, "expect to result in NaN");
         assert.equal(this.spinBox.input.value, "NaN", "expect to display 'NaN'");
-    });
-
-    QUnit.test("does not accept non-numeric value with changeValue()", function(assert) {
-        this.spinBox.changeValue(11);
-        this.spinBox.changeValue("d");
-        let value = this.spinBox.getValue();
-        assert.equal(this.spinBox.getValue(), 11, "expect value to remain 11");
     });
 
     QUnit.test("handles min and max allowable values", function(assert) {
@@ -55,20 +42,20 @@ QUnit.module("SpinBox", function(hooks) {
         assert.equal(this.spinBox.getValue(), 1, "expect value to be 1");
     });
 
-    QUnit.test("dispatches change event on changeValue()", function(assert) {
-        let valueReceived = null;
-        let deltaReceived = null;
-        this.spinBox.addEventListener("change", function(evt) {
-            valueReceived = evt.target.value;
-        });
+    // QUnit.test("dispatches change event on changeValue()", function(assert) {
+        // let valueReceived = null;
+        // let deltaReceived = null;
+        // this.spinBox.addEventListener("change", function(evt) {
+            // valueReceived = evt.target.value;
+        // });
 
-        this.spinBox.setValue(10);
-        let newValue = 10 + 100000;
+        // this.spinBox.setValue(10);
+        // let newValue = 10 + 100000;
 
-        this.spinBox.changeValue(newValue);
+        // this.spinBox.setValue(newValue);
 
-        assert.equal(valueReceived, 10 + 100000, "expect set and get -1");
-    });
+        // assert.equal(valueReceived, 10 + 100000, "expect set and get -1");
+    // });
 
 });
 

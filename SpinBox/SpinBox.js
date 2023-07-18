@@ -183,7 +183,7 @@ class SpinBox extends HTMLElement {
                 parseFloat(this.getAttribute("highSpeed")) || defaults.highSpeed;
         this.increaseSpeedAfter = opts.increaseSpeedAfter ||
                 parseFloat(this.getAttribute("increaseSpeedAfter")) || defaults.increaseSpeedAfter;
-        this.value = opts.value ||
+        this._value = opts.value ||
                 parseFloat(this.getAttribute("value")) || defaults.value;
 
         this.currentSpeed = 0;
@@ -195,7 +195,7 @@ class SpinBox extends HTMLElement {
         this.shadowRoot.appendChild(template.content.cloneNode(true));
 
         this.input = this.shadowRoot.querySelector("input");
-        this.input.value = this.value.toFixed(this.decimals);
+        this.input.value = this._value.toFixed(this.decimals);
 
         this.input.addEventListener("focus", this.input.select);
         this.input.addEventListener("keydown", this.handleKeyDown.bind(this));
@@ -257,37 +257,58 @@ class SpinBox extends HTMLElement {
         return this.input.disabled;
     }
 
+    set value(amount) {
+        amount = Math.max(this.min, amount);
+        amount = Math.min(this.max, amount);
+
+        this._value = amount;
+        this.input.value = amount.toFixed(this.decimals);
+    }
+
+    get value() {
+        return this._value;
+    }
+
     handleFocusOut(evt) {
         if (!this.contains(evt.relatedTarget)) {
-            let value = this.getValue();
-            this.changeValue(value, false);
+            this.value = this.validate(this.value);
         }
     }
 
     handleMouseWheel(evt) {
         if (document.activeElement === this) {
             let direction = (evt.deltaY < 0)? 1 : -1;
-            let value = this.getValue();
-            this.changeValue(value + this.step * direction);
+            this.value = this.validate(this._value + this.step * direction);
+            this.dispatchEvent(this.changeEvent);
+            this.input.select();
         }
     }
 
     handleKeyDown(evt) {
         if (evt.key === "Enter") {
             evt.preventDefault();
-            let value = this.getValue();
-            this.changeValue(value);
+            this.value = this.validate(this.input.value);
+            this.dispatchEvent(this.changeEvent);
         }
         if (evt.key === "ArrowUp") {
             evt.preventDefault();
-            let value = this.getValue();
-            this.changeValue(value + this.step);
+            this.value = this.validate(this.value + this.step);
+            this.dispatchEvent(this.changeEvent);
+            this.input.select();
         }
         if (evt.key === "ArrowDown") {
             evt.preventDefault();
-            let value = this.getValue();
-            this.changeValue(value - this.step);
+            this.value = this.validate(this.value - this.step);
+            this.dispatchEvent(this.changeEvent);
+            this.input.select();
         }
+    }
+
+    validate(value) {
+        if (isNaN(value)) value = this._value;
+        value = Math.max(this.min, value);
+        value = Math.min(this.max, value);
+        return value;
     }
 
     stepValue(stepAmount) {
@@ -295,9 +316,9 @@ class SpinBox extends HTMLElement {
 
         const now = performance.now();
         if (now - this.timer > this.currentSpeed) {
-            let value = this.getValue();
-            value += stepAmount;
-            this.changeValue(value);
+            this.value += stepAmount;
+            this.dispatchEvent(this.changeEvent);
+            this.input.select();
             this.numOfTimes += 1;
             this.timer = now;
         }
@@ -309,26 +330,13 @@ class SpinBox extends HTMLElement {
         this.animation = requestAnimationFrame(() => this.stepValue(stepAmount));
     }
 
+    /* keeping for backwards compatibility */
     getValue() {
-        let value = parseFloat(this.input.value);
-        return value;
+        return this.value;
     }
 
-    setValue(value) {
-        value = Math.max(this.min, value);
-        value = Math.min(this.max, value);
-
-        this.value = value;
-        this.input.value = value.toFixed(this.decimals);
-    }
-
-    changeValue(value, isFocused = true) {
-        if (isNaN(value)) value = this.value;
-        this.setValue(value);
-        if (isFocused) {
-            this.input.select();
-            this.dispatchEvent(this.changeEvent);
-        }
+    setValue(amount) {
+        this.value = amount;
     }
 }
 
