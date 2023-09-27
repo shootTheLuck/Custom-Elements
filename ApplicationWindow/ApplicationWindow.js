@@ -157,7 +157,8 @@ template.innerHTML =
         font-style: inherit;
         font-size: inherit;
         overflow: hidden;
-        height: 100%;
+        // height: 100%;
+        height: calc(100% - var(--title-bar-height));
         display: block;
         position: relative;
     }
@@ -278,7 +279,7 @@ class ApplicationWindow extends HTMLElement {
     open() {
         this.isOpen = true;
         this.style.opacity = 1.0;
-        this.style.display = "flex";
+        this.style.display = "block";
         /* re-append to put this higher in the stacking context */
         this.parentElement.appendChild(this);
         this.dispatchEvent(this.openEvent);
