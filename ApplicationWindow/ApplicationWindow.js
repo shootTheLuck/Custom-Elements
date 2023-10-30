@@ -157,10 +157,14 @@ template.innerHTML =
         font-style: inherit;
         font-size: inherit;
         overflow: hidden;
-        // height: 100%;
         height: calc(100% - var(--title-bar-height));
         display: block;
         position: relative;
+    }
+
+    .center-div {
+        width: 100px;
+        left: 0;
     }
 
 </style>
@@ -290,6 +294,14 @@ class ApplicationWindow extends HTMLElement {
         this.style.top = 0;
         this.style.width = "100%";
         this.style.height = "100%";
+    }
+
+    center() {
+        const rect = this.getBoundingClientRect();
+        this.style.width = Math.min(this.parentElement.clientWidth, rect.width) + "px";
+        this.style.height = Math.min(this.parentElement.clientHeight, rect.height) + "px";
+        this.style.left = window.innerWidth/2 - rect.width/2 + "px";
+        this.style.top = window.innerHeight/2 - rect.height/2 + "px";
     }
 }
 
