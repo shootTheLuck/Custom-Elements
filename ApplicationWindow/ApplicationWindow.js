@@ -297,11 +297,22 @@ class ApplicationWindow extends HTMLElement {
     }
 
     center() {
-        const rect = this.getBoundingClientRect();
-        this.style.width = Math.min(this.parentElement.clientWidth, rect.width) + "px";
-        this.style.height = Math.min(this.parentElement.clientHeight, rect.height) + "px";
-        this.style.left = window.innerWidth/2 - rect.width/2 + "px";
-        this.style.top = window.innerHeight/2 - rect.height/2 + "px";
+        let width = Math.min(this.clientWidth, window.innerWidth);
+        let height = Math.min(this.clientHeight, window.innerHeight);
+        const parentWidth = this.parentElement.clientWidth;
+        const parentHeight = this.parentElement.clientHeight;
+
+        if (parentWidth > 0 && parentWidth < width) {
+            width = parentWidth;
+        }
+        if (parentHeight > 0 && parentHeight < height) {
+            height = parentHeight;
+        }
+
+        this.style.width = width + "px";
+        this.style.height = height + "px";
+        this.style.left = window.innerWidth/2 - width/2 + "px";
+        this.style.top = window.innerHeight/2 - height/2 + "px";
     }
 }
 
